@@ -13,6 +13,7 @@
  *
  * @RED: 0 -> Red node
  * @BLACK: 1 -> Black node
+ * @DOUBLE_BLACK: 2 -> I don't know what is this, it is given to me
  */
 typedef enum rb_color_e
 {
@@ -38,6 +39,12 @@ typedef struct rb_tree_s
 	struct rb_tree_s *left;
 	struct rb_tree_s *right;
 } rb_tree_t;
+/**
+ * struct queue_s - queue that stores the tree nodes for value comparison
+ * @head: head node
+ * @tail: tail node
+ * @queue_arr: array of tree nodes
+ */
 typedef struct queue_s
 {
 	int head; /* position */
