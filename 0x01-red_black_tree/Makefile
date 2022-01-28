@@ -10,3 +10,5 @@ rb_tree_node:	$(PTREE) $(NNODE) 0-main.c
 	$(CC) $(CFLAGS) $^ -o $@
 rb_tree_valid:	$(PTREE) $(NNODE) 1-main.c 1-rb_tree_is_valid.c
 	$(CC) $(CFLAGS) $^ -o $@
+rb_tree_insert:	$(PTREE) $(NNODE) 2-main.c 2-rb_tree_insert.c
+	$(CC) $(CFLAGS) $^ -o $@

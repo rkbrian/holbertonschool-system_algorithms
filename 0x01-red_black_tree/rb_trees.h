@@ -57,10 +57,17 @@ void rb_tree_print(const rb_tree_t *tree);
 /* major functions */
 rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 int rb_tree_is_valid(const rb_tree_t *tree);
+rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 /* helper functions */
 int red_check(const rb_tree_t *tree);
 int beast_wars(const rb_tree_t *tree, int root_num, int direction);
 int rb_tree_balance(const rb_tree_t *tree, int max_height, int local_height);
 size_t rb_tree_height(const rb_tree_t *tree);
+void rb_rotator(rb_tree_t **tree, rb_tree_t *tmp);
+rb_tree_t *rb_tree_rotate_left(rb_tree_t *tree);
+rb_tree_t *rb_tree_rotate_right(rb_tree_t *tree);
+rb_tree_t *rb_tree_uncle(rb_tree_t *node);
+void case_triangle(rb_tree_t **tree, rb_tree_t *parent);
+void case_bar(rb_tree_t **tree, rb_tree_t *tmp);
 
 #endif /* RB_TREES_H */
