@@ -9,6 +9,7 @@
 vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *current = NULL, *tmp;
+	size_t i;
 
 	if (!str)
 		return (NULL);
@@ -19,29 +20,29 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 			return (NULL);
 		graph->nb_vertices = 0;
 	}
-	current = graph->vertices;
+	current = graph->vertices, i = 0;
 	while (current && current->next)
-		current = current->next;
+		current = current->next, i++;
 	tmp = malloc(sizeof(vertex_t));
 	if (!tmp)
 	{
 		free_graph(graph);
 		return (NULL);
 	}
-	tmp->edges = malloc(sizeof(edge_t));
+	/*tmp->edges = malloc(sizeof(edge_t));
 	if (tmp->edges == NULL)
 	{
 		free(tmp), free_graph(graph);
 		return (NULL);
-	}
+	}*/
 	tmp->content = strdup(str);
 	if (tmp->content == NULL)
 	{
-		free(tmp->edges), free(tmp), free_graph(graph);
+		/*free(tmp->edges), */free(tmp), free_graph(graph);
 		return (NULL);
 	}
-	tmp->nb_edges = 0, tmp->index = 0, tmp->next = NULL;
-	tmp->edges->dest = NULL, tmp->edges->next = NULL;
+	tmp->nb_edges = 0, tmp->index = i, tmp->next = NULL;
+	/*tmp->edges->dest = NULL, tmp->edges->next = NULL;*/
 	current->next = tmp, graph->nb_vertices += 1;
 	return (tmp);
 }

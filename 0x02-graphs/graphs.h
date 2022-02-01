@@ -67,6 +67,8 @@ void graph_display(const graph_t *graph);
 /*major functions*/
 graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
+int graph_add_edge(graph_t *graph, const char *src, const char *dest,
+		   edge_type_t type);
 /*helper functions*/
 void free_graph(graph_t *graph);
 
