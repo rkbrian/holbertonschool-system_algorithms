@@ -28,7 +28,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	curr_edge = new_edge(current);
 	if (!curr_edge)
 		return (0);
-	curr_edge->dest = target, curr_edge->next = NULL, current->nb_edges += 1;
+	curr_edge->dest = target, current->nb_edges += 1;
 	if (type == BIDIRECTIONAL)
 	{
 		tar_edge = new_edge(target);
@@ -37,7 +37,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 			free(curr_edge), current->nb_edges -= 1;
 			return (0);
 		}
-		tar_edge->dest = current, tar_edge->next = NULL, target->nb_edges += 1;
+		tar_edge->dest = current, target->nb_edges += 1;
 	}
 	return (1);
 }
@@ -57,6 +57,7 @@ edge_t *new_edge(vertex_t *current)
 		curr_edge = malloc(sizeof(edge_t));
 		if (!curr_edge)
 			return (NULL);
+		curr_edge->dest = NULL, curr_edge->next = NULL;
 		return (curr_edge);
 	}
 	while (curr_edge && curr_edge->next)
@@ -64,5 +65,6 @@ edge_t *new_edge(vertex_t *current)
 	curr_edge->next = malloc(sizeof(edge_t));
 	if (curr_edge->next == NULL)
 		return (NULL);
+	curr_edge->next->dest = NULL, curr_edge->next->next = NULL;
 	return (curr_edge->next);
 }
