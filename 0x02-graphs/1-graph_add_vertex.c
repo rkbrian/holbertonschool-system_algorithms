@@ -10,15 +10,8 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *current, *tmp;
 
-	if (!str)
+	if (!graph || !str)
 		return (NULL);
-	if (!graph)
-	{
-		graph = malloc(sizeof(graph_t));
-		if (!graph)
-			return (NULL);
-		graph->nb_vertices = 0;
-	}
 	if (graph->vertices == NULL)
 		return (head_start(graph, str));
 	current = graph->vertices;
