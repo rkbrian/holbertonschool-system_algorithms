@@ -12,6 +12,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 		   edge_type_t type)
 {
 	vertex_t *current = NULL, *target = NULL;
+	edge_t *curr_edge = NULL, *tar_edge = NULL;
 
 	if (!graph || !graph->vertices || !src || !dest)
 		return (0);
@@ -24,21 +25,44 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 		target = target->next;
 	if (!current || !target)
 		return (0);
-	current->edges = malloc(sizeof(edge_t));
-	if (current->edges == NULL)
+
+	if ((curr_edge = new_edge(current)) == NULL)
 		return (0);
-	current->edges->dest = target, current->edges->next = NULL;
-	current->nb_edges += 1;
+	curr_edge->dest = target, curr_edge->next = NULL, current->nb_edges += 1;
 	if (type == BIDIRECTIONAL)
 	{
-		target->edges = malloc(sizeof(edge_t));
-		if (target->edges == NULL)
+		if ((tar_edge = new_edge(target)) == NULL)
 		{
-			free(current->edges), current->nb_edges -= 1;
+			free(curr_edge), current->nb_edges -= 1;
 			return (0);
 		}
-		target->edges->dest = current, target->edges->next = NULL;
-		target->nb_edges += 1;
+		tar_edge->dest = current, tar_edge->next = NULL, target->nb_edges += 1;
 	}
 	return (1);
+}
+
+/**
+ * new_edge - function to return the newly allocated edge
+ * @current: current vertex
+ * Return: the newly allocated edge
+ */
+edge_t *new_edge(vertex_t *current)
+{
+	edge_t *curr_edge = NULL;
+
+	if (current->edges == NULL)
+	{
+		curr_edge = current->edges;
+		curr_edge = malloc(sizeof(edge_t));
+		if (!curr_edge)
+			return (NULL);
+		return (curr_edge);
+	}
+	curr_edge = current->edges;
+	while (curr_edge && curr_edge->next)
+		curr_edge = curr_edge->next;
+	curr_edge->next = malloc(sizeof(edge_t));
+	if (curr_edge->next == NULL)
+		return (NULL);
+	return (curr_edge->next);
 }
