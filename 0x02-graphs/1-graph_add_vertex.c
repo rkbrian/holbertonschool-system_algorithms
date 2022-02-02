@@ -10,6 +10,8 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *current, *tmp;
 
+	if (!str)
+		return (NULL);
 	if (!graph)
 	{
 		graph = malloc(sizeof(graph_t));
@@ -17,8 +19,6 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 			return (NULL);
 		graph->nb_vertices = 0;
 	}
-	if (!str)
-		return (NULL);
 	if (graph->vertices == NULL)
 		return (head_start(graph, str));
 	current = graph->vertices;
@@ -77,8 +77,6 @@ void free_graph(graph_t *graph)
  */
 vertex_t *head_start(graph_t *graph, const char *str)
 {
-	if (!str)
-		return (NULL);
 	graph->vertices = malloc(sizeof(vertex_t));
 	if (graph->vertices == NULL)
 	{
