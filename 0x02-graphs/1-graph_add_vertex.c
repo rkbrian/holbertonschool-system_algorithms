@@ -29,21 +29,14 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		free_graph(graph);
 		return (NULL);
 	}
-	/*tmp->edges = malloc(sizeof(edge_t));
-	if (tmp->edges == NULL)
-	{
-		free(tmp), free_graph(graph);
-		return (NULL);
-	}*/
+	tmp->edges = NULL;
 	tmp->content = strdup(str);
 	if (tmp->content == NULL)
 	{
-		/*free(tmp->edges), */
 		free(tmp), free_graph(graph);
 		return (NULL);
 	}
 	tmp->nb_edges = 0, tmp->index = i, tmp->next = NULL;
-	/*tmp->edges->dest = NULL, tmp->edges->next = NULL;*/
 	current->next = tmp, graph->nb_vertices += 1;
 	return (tmp);
 }
