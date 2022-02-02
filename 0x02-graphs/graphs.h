@@ -77,6 +77,7 @@ void graph_delete(graph_t *graph);
 void free_graph(graph_t *graph);
 size_t *buffalo(const graph_t *graph);
 vertex_t *head_start(graph_t *graph, const char *str);
-edge_t *new_edge(vertex_t *current);
+edge_t *new_edge(void);
+void bidirect(edge_t *tar_edge);
 
 #endif /*GRAPHS_H*/

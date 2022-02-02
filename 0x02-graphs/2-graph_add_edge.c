@@ -14,9 +14,8 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	vertex_t *current = NULL, *target = NULL;
 	edge_t *curr_edge = NULL, *tar_edge = NULL;
 
-	if (!graph || !graph->vertices || !src || !dest)
-		return (0);
-	if (type != UNIDIRECTIONAL && type != BIDIRECTIONAL)
+	if (!graph || !graph->vertices || !src || !dest ||
+	    (type != UNIDIRECTIONAL && type != BIDIRECTIONAL))
 		return (0);
 	current = graph->vertices, target = graph->vertices;
 	while (current && strcmp(src, current->content) != 0)
@@ -25,13 +24,13 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 		target = target->next;
 	if (!current || !target)
 		return (0);
-	curr_edge = new_edge(current);
+	curr_edge = current->edges, bidirect(curr_edge);
 	if (!curr_edge)
 		return (0);
-	curr_edge->dest = target, current->nb_edges += 1;
+	curr_edge->dest = target, current->nb_edges += 1, tar_edge = target->edges;
 	if (type == BIDIRECTIONAL)
 	{
-		tar_edge = new_edge(target);
+		bidirect(tar_edge);
 		if (!tar_edge)
 		{
 			free(curr_edge), current->nb_edges -= 1;
@@ -47,24 +46,29 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
  * @current: current vertex
  * Return: the newly allocated edge
  */
-edge_t *new_edge(vertex_t *current)
+edge_t *new_edge(void)
 {
 	edge_t *curr_edge = NULL;
 
-	curr_edge = current->edges;
-	if (curr_edge == NULL)
-	{
-		curr_edge = malloc(sizeof(edge_t));
-		if (!curr_edge)
-			return (NULL);
-		curr_edge->dest = NULL, curr_edge->next = NULL;
-		return (curr_edge);
-	}
-	while (curr_edge && curr_edge->next)
-		curr_edge = curr_edge->next;
-	curr_edge->next = malloc(sizeof(edge_t));
-	if (curr_edge->next == NULL)
+	curr_edge = malloc(sizeof(edge_t));
+	if (!curr_edge)
 		return (NULL);
-	curr_edge->next->dest = NULL, curr_edge->next->next = NULL;
-	return (curr_edge->next);
+	curr_edge->dest = NULL, curr_edge->next = NULL;
+	return (curr_edge);
+}
+
+/**
+ * bidirect - something
+ * @tar_edge: 
+ */
+void bidirect(edge_t *tar_edge)
+{
+	if (!tar_edge)
+		tar_edge = new_edge();
+	else
+	{
+		while (tar_edge && tar_edge->next)
+			tar_edge = tar_edge->next;
+		tar_edge->next = new_edge(), tar_edge = tar_edge->next;			
+	}
 }
