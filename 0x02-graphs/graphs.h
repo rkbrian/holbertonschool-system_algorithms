@@ -1,6 +1,8 @@
 #ifndef GRAPHS_H
 #define GRAPHS_H
 
+#define MAX_BUFF 1024
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -69,7 +71,9 @@ graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 		   edge_type_t type);
+void graph_delete(graph_t *graph);
 /*helper functions*/
 void free_graph(graph_t *graph);
+size_t *buffalo(const graph_t *graph);
 
 #endif /*GRAPHS_H*/
