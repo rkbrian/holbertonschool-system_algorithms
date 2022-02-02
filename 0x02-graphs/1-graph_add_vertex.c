@@ -15,14 +15,14 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 	if (graph->vertices == NULL)
 		return (head_start(graph, str));
 	current = graph->vertices;
-	if (current && strcmp(str, current->content) == 0)
-		return (NULL);
 	while (current && current->next)
 	{
 		if (strcmp(str, current->content) == 0)
 			return (NULL);
 		current = current->next;
 	}
+	if (strcmp(str, current->content) == 0)
+		return (NULL);
 	tmp = malloc(sizeof(vertex_t));
 	if (tmp == NULL)
 	{

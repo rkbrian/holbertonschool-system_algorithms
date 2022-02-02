@@ -41,7 +41,7 @@ int main(void)
 
     graph_display(graph);
 
-    if (!graph_add_vertex(graph, "San Francisco"))
+    if (!graph_add_vertex(graph, "Boston"))
         fprintf(stderr, "Failed to add \"San Francisco\"\n");
 
     return (EXIT_SUCCESS);
