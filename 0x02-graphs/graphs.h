@@ -76,5 +76,6 @@ void graph_delete(graph_t *graph);
 /*helper functions*/
 void free_graph(graph_t *graph);
 size_t *buffalo(const graph_t *graph);
+vertex_t *head_start(graph_t *graph, const char *str);
 
 #endif /*GRAPHS_H*/

@@ -25,7 +25,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	if (!current || !target)
 		return (0);
 	current->edges = malloc(sizeof(edge_t));
-	if (current->edges = NULL)
+	if (current->edges == NULL)
 		return (0);
 	current->edges->dest = target, current->edges->next = NULL;
 	current->nb_edges += 1;

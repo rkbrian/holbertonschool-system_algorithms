@@ -8,8 +8,8 @@
  */
 vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
-	vertex_t *current = NULL, *tmp;
-	size_t i;
+	vertex_t *current, *tmp;
+	size_t i = 0;
 
 	if (!str)
 		return (NULL);
@@ -18,19 +18,25 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		graph = malloc(sizeof(graph_t));
 		if (!graph)
 			return (NULL);
-		graph->nb_vertices = 0;
 	}
-	current = graph->vertices, i = 0;
+	if (graph->vertices == NULL)
+		return (head_start(graph, str));
+	current = graph->vertices, i = graph->nb_vertices;
+	if (current && strcmp(str, current->content) == 0)
+		return (NULL);
 	while (current && current->next)
-		current = current->next, i++;
+	{
+		if (strcmp(str, current->content) == 0)
+			return (NULL);
+		current = current->next;
+	}
 	tmp = malloc(sizeof(vertex_t));
-	if (!tmp)
+	if (tmp == NULL)
 	{
 		free_graph(graph);
 		return (NULL);
 	}
-	tmp->edges = NULL;
-	tmp->content = strdup(str);
+	tmp->edges = NULL, tmp->content = strdup(str);
 	if (tmp->content == NULL)
 	{
 		free(tmp), free_graph(graph);
@@ -38,7 +44,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 	}
 	tmp->nb_edges = 0, tmp->index = i, tmp->next = NULL;
 	current->next = tmp, graph->nb_vertices += 1;
-	return (tmp);
+	return (current);
 }
 
 /**
@@ -48,16 +54,43 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 void free_graph(graph_t *graph)
 {
 	vertex_t *current = NULL, *tmp = NULL;
+	edge_t *curr_edge = NULL, *edge_tmp = NULL;
 
 	current = graph->vertices;
 	while (current)
 	{
-		tmp = current->next;
+		tmp = current->next, curr_edge = current->edges;
 		if (current->content)
 			free(current->content);
-		if (current->edges)
-			free(current->edges);
+		while (curr_edge)
+			edge_tmp = curr_edge->next, free(curr_edge), curr_edge = edge_tmp;
 		free(current), current = tmp;
 	}
 	free(graph);
+}
+
+/**
+ * head_start - function to make head vertex
+ * @graph: pointer to the graph to add the vertex to
+ * @str: the string to store in the new vertex
+ * Return: a pointer to the created vertex, or NULL on failure
+ */
+vertex_t *head_start(graph_t *graph, const char *str)
+{
+	graph->vertices = malloc(sizeof(vertex_t));
+	if (graph->vertices == NULL)
+	{
+		free(graph);
+		return (NULL);
+	}
+	graph->vertices->content = strdup(str);
+	if (graph->vertices->content == NULL)
+	{
+		free(graph->vertices), free(graph);
+		return (NULL);
+	}
+	graph->vertices->edges = NULL, graph->vertices->index = 0;
+	graph->vertices->nb_edges = 0, graph->vertices->next = NULL;
+	graph->nb_vertices = 1;
+	return (graph->vertices);
 }
