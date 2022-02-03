@@ -15,11 +15,8 @@ size_t depth_first_traverse(const graph_t *graph,
 	if (!graph || !action || graph->nb_vertices == 0)
 		return (0);
 	arr = malloc(sizeof(arr) * graph->nb_vertices);
-	if (arr)
-	{
-		free(arr);
+	if (!arr)
 		return (0);
-	}
 	memset(arr, 1, graph->nb_vertices * sizeof(size_t)); /*list of unvisited*/
 	dfs_recursion(graph->vertices, 0, arr, action);
 	ret_depth = max_depth(0);
