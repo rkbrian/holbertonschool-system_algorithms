@@ -28,7 +28,6 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 
 /**
  * new_edge - function to return the newly allocated edge
- * @current: current vertex
  * Return: the newly allocated edge
  */
 edge_t *new_edge(void)
@@ -43,7 +42,7 @@ edge_t *new_edge(void)
 }
 
 /**
- * bidirect - case bidirectional.
+ * make_edge - case bidirectional.
  *  This fuction is for beating Betty check on number of code lines
  * @current: src vertex
  * @target: dest vertex
@@ -54,24 +53,25 @@ int make_edge(vertex_t *current, vertex_t *target, edge_type_t type)
 {
 	edge_t *curr_edge = NULL, *tar_edge = NULL;
 
-	curr_edge = current->edges;
-	if (!curr_edge)
-		curr_edge = new_edge();
+	if (current->edges == NULL)
+		current->edges = new_edge(), curr_edge = current->edges;
 	else
 	{
+		curr_edge = current->edges;
 		while (curr_edge && curr_edge->next)
 			curr_edge = curr_edge->next;
 		curr_edge->next = new_edge(), curr_edge = curr_edge->next;
 	}
 	if (!curr_edge)
 		return (0);
-	curr_edge->dest = target, current->nb_edges += 1, tar_edge = target->edges;
+	curr_edge->dest = target, current->nb_edges += 1;
 	if (type == BIDIRECTIONAL)
 	{
-		if (!tar_edge)
-			tar_edge = new_edge();
+		if (target->edges == NULL)
+			target->edges = new_edge(), tar_edge = target->edges;
 		else
 		{
+			tar_edge = target->edges;
 			while (tar_edge && tar_edge->next)
 				tar_edge = tar_edge->next;
 			tar_edge->next = new_edge(), tar_edge = tar_edge->next;
