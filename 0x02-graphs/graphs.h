@@ -78,7 +78,6 @@ void free_graph(graph_t *graph);
 size_t *buffalo(const graph_t *graph);
 vertex_t *head_start(graph_t *graph, const char *str);
 edge_t *new_edge(void);
-int bidirect(edge_t *tar_edge, edge_t *curr_edge,
-	     vertex_t *current, vertex_t *target);
+int make_edge(vertex_t *current, vertex_t *target, edge_type_t type);
 
 #endif /*GRAPHS_H*/
