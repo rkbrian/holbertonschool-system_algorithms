@@ -24,20 +24,20 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 		target = target->next;
 	if (!current || !target)
 		return (0);
-	curr_edge = current->edges, bidirect(curr_edge);
+	curr_edge = current->edges;
+	if (!curr_edge)
+		curr_edge = new_edge();
+	else
+	{
+		while (curr_edge && curr_edge->next)
+			curr_edge = curr_edge->next;
+		curr_edge->next = new_edge(), curr_edge = curr_edge->next;
+	}
 	if (!curr_edge)
 		return (0);
 	curr_edge->dest = target, current->nb_edges += 1, tar_edge = target->edges;
 	if (type == BIDIRECTIONAL)
-	{
-		bidirect(tar_edge);
-		if (!tar_edge)
-		{
-			free(curr_edge), current->nb_edges -= 1;
-			return (0);
-		}
-		tar_edge->dest = current, target->nb_edges += 1;
-	}
+		return (bidirect(tar_edge, curr_edge, current, target));
 	return (1);
 }
 
@@ -58,10 +58,16 @@ edge_t *new_edge(void)
 }
 
 /**
- * bidirect - something
- * @tar_edge: 
+ * bidirect - case bidirectional.
+ *  This fuction is for beating Betty check on number of code lines
+ * @tar_edge: dest vertex edge
+ * @curr_edge: src vertex edge
+ * @current: src vertex
+ * @target: dest vertex
+ * Return: 1 on success, or 0 on failure. On failure, no edge created
  */
-void bidirect(edge_t *tar_edge)
+int bidirect(edge_t *tar_edge, edge_t *curr_edge,
+	     vertex_t *current, vertex_t *target)
 {
 	if (!tar_edge)
 		tar_edge = new_edge();
@@ -69,6 +75,13 @@ void bidirect(edge_t *tar_edge)
 	{
 		while (tar_edge && tar_edge->next)
 			tar_edge = tar_edge->next;
-		tar_edge->next = new_edge(), tar_edge = tar_edge->next;			
+		tar_edge->next = new_edge(), tar_edge = tar_edge->next;
 	}
+	if (!tar_edge)
+	{
+		free(curr_edge), current->nb_edges -= 1;
+		return (0);
+	}
+	tar_edge->dest = current, target->nb_edges += 1;
+	return (1);
 }
