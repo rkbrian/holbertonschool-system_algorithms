@@ -5,19 +5,18 @@
  *  the depth-first algorithm. The traversal must start from the 1st vertex.
  * @graph: a pointer to the graph to traverse.
  * @action: a pointer to a function to be called for each visited vertex
- * @v: a const pointer to the visited vertex
- * @depth: the depth of v, from the starting vertex
  * Return: the biggest vertex depth, or 0 on failure
  */
 size_t depth_first_traverse(const graph_t *graph,
 			    void (*action)(const vertex_t *v, size_t depth))
 {
-	size_t ret_depth, *arr = malloc(sizeof(*arr) * graph->nb_vertices);
+	size_t ret_depth = 0, *arr = malloc(sizeof(*arr) * graph->nb_vertices);
 
-	if (!graph || graph->nb_vertices == 0 || !arr)
+	if (!graph || !action || graph->nb_vertices == 0 || !arr)
 		return (0);
 	memset(arr, 1, graph->nb_vertices * sizeof(size_t)); /*list of unvisited*/
-	ret_depth = dfs_recursion(graph->vertices, 0, arr, action);
+	dfs_recursion(graph->vertices, 0, arr, action);
+	ret_depth = max_depth(0);
 	free(arr);
 	return (ret_depth);
 }
@@ -29,25 +28,35 @@ size_t depth_first_traverse(const graph_t *graph,
  * @dd: the depth of vv, from the starting vertex
  * @arr: index array of unvisited, index marked 1 for unvisited vertex index
  * @action: a pointer to a function to be called for each visited vertex
- * @v: a const pointer to the visited vertex
- * @depth: the depth of v, from the starting vertex
- * Return: the maximum depth found
  */
-size_t dfs_recursion(const vertex_t *vv, size_t dd, size_t *arr,
-		void (*action)(const vertex_t *v, size_t depth))
+void dfs_recursion(const vertex_t *vv, size_t dd, size_t *arr,
+		   void (*action)(const vertex_t *v, size_t depth))
 {
-	size_t tmp_depth, curr_depth = 0;
-	edge_t *curr_edge = vv->edges;
+	edge_t *curr_edge;
 
-	if (arr[vv->index] == 0)
-		return (dd - 1);
+	if (!vv || arr[vv->index] == 0)
+		return; /*recursion advance: search for next node in stack*/
+	curr_edge = vv->edges;
 	action(vv, dd);
 	arr[vv->index] = 0;
+	max_depth(dd), dd++;
 	while (curr_edge)
 	{
-		tmp_depth = dfs_recursion(curr_edge->dest, dd + 1, arr, action);
-		if (tmp_depth > curr_depth)
-			curr_depth = tmp_depth;
+		dfs_recursion(curr_edge->dest, dd, arr, action);
+		curr_edge = curr_edge->next;
 	}
-	return (curr_depth);
+}
+
+/**
+ * max_depth - function to store and return max depth
+ * @dd: local depth to be tested
+ * Return: max depth
+ */
+size_t max_depth(size_t dd)
+{
+	static size_t ret_d;
+
+	if (dd > ret_d)
+		ret_d = dd;
+	return (ret_d);
 }
