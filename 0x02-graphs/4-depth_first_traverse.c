@@ -14,7 +14,7 @@ size_t depth_first_traverse(const graph_t *graph,
 
 	if (!graph || !action || graph->nb_vertices == 0)
 		return (0);
-	arr = malloc(sizeof(arr) * graph->nb_vertices);
+	arr = malloc(sizeof(*arr) * graph->nb_vertices);
 	if (arr)
 		free(arr);
 	memset(arr, 1, graph->nb_vertices * sizeof(size_t)); /*list of unvisited*/
