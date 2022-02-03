@@ -75,9 +75,10 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 void graph_delete(graph_t *graph);
 /*helper functions*/
 void free_graph(graph_t *graph);
-size_t *buffalo(const graph_t *graph);
 vertex_t *head_start(graph_t *graph, const char *str);
 edge_t *new_edge(void);
 int make_edge(vertex_t *current, vertex_t *target, edge_type_t type);
+size_t dfs_recursion(const vertex_t *vv, size_t dd, size_t *arr,
+		void (*action)(const vertex_t *v, size_t depth));
 
 #endif /*GRAPHS_H*/
