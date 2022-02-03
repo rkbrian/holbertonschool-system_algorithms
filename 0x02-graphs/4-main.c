@@ -39,6 +39,7 @@ int main(void)
         !graph_add_vertex(graph, "Chicago") ||
         !graph_add_vertex(graph, "Houston") ||
         !graph_add_vertex(graph, "Las Vegas") ||
+        !graph_add_vertex(graph, "OKC") ||
         !graph_add_vertex(graph, "Boston"))
     {
         fprintf(stderr, "Failed to add vertex\n");
@@ -54,6 +55,8 @@ int main(void)
         !graph_add_edge(graph, "Seattle", "Chicago", UNIDIRECTIONAL) ||
         !graph_add_edge(graph, "New York", "Houston", BIDIRECTIONAL) ||
         !graph_add_edge(graph, "Seattle", "Miami", BIDIRECTIONAL) ||
+        !graph_add_edge(graph, "OKC", "Boston", BIDIRECTIONAL) ||
+        !graph_add_edge(graph, "Seattle", "OKC", BIDIRECTIONAL) ||
         !graph_add_edge(graph, "San Francisco", "Boston", BIDIRECTIONAL))
     {
         fprintf(stderr, "Failed to add edge\n");
