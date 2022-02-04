@@ -20,7 +20,7 @@ size_t breadth_first_traverse(const graph_t *graph,
 	arr = malloc(sizeof(arr) * graph->nb_vertices);
 	if (!arr)
 		return (0);
-	buffalo = malloc(sizeof(vertex_t *) * (graph->nb_vertices + 1));
+	buffalo = malloc(sizeof(vertex_t *) * (graph->nb_vertices));
 	if (!buffalo)
 	{
 		free(arr);
