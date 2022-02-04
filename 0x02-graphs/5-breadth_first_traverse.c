@@ -28,6 +28,11 @@ size_t breadth_first_traverse(const graph_t *graph,
 	}
 	memset(arr, 1, graph->nb_vertices * sizeof(size_t)); /*list of unvisited*/
 	buffalo[0] = graph->vertices, arr[0] = 0, buffalo[graph->nb_vertices] = NULL;
+	if (buffalo[0]->edges == NULL)
+	{
+		free(arr), free(buffalo);
+		return (0);
+	}
 	while (buffalo[i])
 	{
 		action(buffalo[i], ret_depth), curr_edge = buffalo[i]->edges;
