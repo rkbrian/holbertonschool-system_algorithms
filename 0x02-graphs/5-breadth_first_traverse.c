@@ -20,14 +20,14 @@ size_t breadth_first_traverse(const graph_t *graph,
 	arr = malloc(sizeof(arr) * graph->nb_vertices);
 	if (!arr)
 		return (0);
-	buffalo = malloc(sizeof(vertex_t *) * (graph->nb_vertices));
+	buffalo = malloc(sizeof(vertex_t *) * (graph->nb_vertices + 1));
 	if (!buffalo)
 	{
 		free(arr);
 		return (0);
 	}
 	memset(arr, 1, graph->nb_vertices * sizeof(size_t)); /*list of unvisited*/
-	buffalo[0] = graph->vertices, arr[0] = 0;
+	buffalo[0] = graph->vertices, arr[0] = 0, buffalo[graph->nb_vertices] = NULL;
 	while (buffalo[i])
 	{
 		action(buffalo[i], ret_depth), curr_edge = buffalo[i]->edges;
