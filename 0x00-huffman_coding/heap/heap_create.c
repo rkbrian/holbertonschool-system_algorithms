@@ -7,5 +7,12 @@
  */
 heap_t *heap_create(int (*data_cmp)(void *, void *))
 {
-	;
+	heap_t *hypocrite;
+
+	hypocrite = malloc(sizeof(heap_t));
+	if (!hypocrite)
+		return (NULL);
+	hypocrite->root = NULL, hypocrite->size = 0;
+	hypocrite->data_cmp = data_cmp;
+	return (hypocrite);
 }
