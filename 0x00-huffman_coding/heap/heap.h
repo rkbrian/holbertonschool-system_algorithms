@@ -68,10 +68,14 @@ void binary_tree_print(const binary_tree_node_t *root,
 heap_t *heap_create(int (*data_cmp)(void *, void *));
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
+void *heap_extract(heap_t *heap);
 
 /*helper functions*/
 void imba(binary_tree_node_t *node, int height, int left_h);
 binary_tree_node_t *imba_node(binary_tree_node_t *node);
+int queue_store(queue_q *queen, const binary_tree_node_t *node);
+binary_tree_node_t *queue_remove(queue_q *queen,
+				const binary_tree_node_t *node);
 
 
 #endif /*HEAP_H*/
