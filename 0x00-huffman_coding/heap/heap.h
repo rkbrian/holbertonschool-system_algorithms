@@ -76,6 +76,8 @@ binary_tree_node_t *imba_node(binary_tree_node_t *node);
 int queue_store(queue_q *queen, const binary_tree_node_t *node);
 binary_tree_node_t *queue_remove(queue_q *queen,
 				const binary_tree_node_t *node);
-
+void *ex_rebuild(heap_t *heap, binary_tree_node_t **ch_arr,
+		binary_tree_node_t **p_arr, int cue_size, int q_size,
+		binary_tree_node_t *leftmost);
 
 #endif /*HEAP_H*/
