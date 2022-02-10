@@ -69,6 +69,7 @@ heap_t *heap_create(int (*data_cmp)(void *, void *));
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
 void *heap_extract(heap_t *heap);
+void heap_delete(heap_t *heap, void (*free_data)(void *));
 
 /*helper functions*/
 void imba(binary_tree_node_t *node, int height, int left_h);
@@ -79,5 +80,6 @@ binary_tree_node_t *queue_remove(queue_q *queen,
 void *ex_rebuild(heap_t *heap, binary_tree_node_t **ch_arr,
 		binary_tree_node_t **p_arr, int cue_size, int q_size,
 		binary_tree_node_t *leftmost);
+void chain_free(binary_tree_node_t *node, void (*free_data)(void *));
 
 #endif /*HEAP_H*/
