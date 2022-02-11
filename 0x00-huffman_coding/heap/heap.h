@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 /**
  * struct binary_tree_node_s - Binary tree node data structure
@@ -70,7 +71,7 @@ binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
 void *heap_extract(heap_t *heap);
 void heap_delete(heap_t *heap, void (*free_data)(void *));
-
+heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 /*helper functions*/
 void imba(binary_tree_node_t *node, int height, int left_h);
 binary_tree_node_t *imba_node(binary_tree_node_t *node);
