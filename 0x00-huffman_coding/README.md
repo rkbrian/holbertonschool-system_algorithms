@@ -12,6 +12,6 @@
 #### 4. Min Binary Heap - Delete heap
 #### 5. Symbols: Create symbol
 #### 6. Huffman coding - Step 1: Priority queue
-#### 
+#### 7. Huffman coding - Step 2: Extract
 #### 
 #### 
