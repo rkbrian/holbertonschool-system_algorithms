@@ -8,9 +8,8 @@
  */
 void *heap_extract(heap_t *heap)
 {
-	binary_tree_node_t *leftmost = NULL, *q_cur = NULL;
-	binary_tree_node_t *ret, *p_arr[MAX_Q_SIZE], *ch_arr[MAX_Q_SIZE];
-	int left_h = 1, q_size = 0, cue_size = 0, cue_flag = 0, q_flag = 0;
+	binary_tree_node_t *leftmost = NULL, *q_cur = NULL, *ret, *last_node = NULL;
+	int left_h = 1, cue_flag = 0;
 	queue_q *q;
 	void *ret_d;
 
@@ -18,7 +17,8 @@ void *heap_extract(heap_t *heap)
 		return (NULL);
 	if (heap->root->left == NULL && heap->root->right == NULL)
 	{
-		ret = heap->root, ret_d = ret->data, heap->root = NULL, free(ret);
+		ret = heap->root, ret_d = ret->data, heap->root = NULL;
+		free(ret), heap->size--;
 		return (ret_d);
 	}
 	leftmost = heap->root, q = malloc(sizeof(queue_q));
@@ -37,16 +37,12 @@ void *heap_extract(heap_t *heap)
 			if (q_cur->right)
 				queue_store(q, q_cur->right);
 		}
-		if (q_cur == leftmost->parent)
-			q_flag++;
-		else if (q_cur == leftmost)
-			q_flag = 0, cue_flag++;
-		if (cue_flag)
-			ch_arr[cue_size] = q_cur, cue_size++;
-		if (q_flag)
-			p_arr[q_size] = q_cur, q_size++;
+		if (q_cur == leftmost)
+			cue_flag++;
+		if (cue_flag && q_cur)
+			last_node = q_cur;
 	}
-	free(q), ret_d = ex_rebuild(heap, ch_arr, p_arr, cue_size, q_size, leftmost);
+	free(q), ret_d = swapme(heap, last_node);
 	return (ret_d);
 }
 
@@ -82,47 +78,71 @@ binary_tree_node_t *queue_remove(queue_q *queen,
 }
 
 /**
- * ex_rebuild - fuction to reconnect all nodes
+ * swapme - function to swap the last node with the root (to be extracted)
  * @heap: a pointer to the heap from which to extract the value
- * @ch_arr: pointer array of the last level of the heap tree
- * @p_arr: pointer array of the 2nd last level of the heap tree
- * @cue_size: null ending index of ch_arr
- * @q_size: null ending index of p_arr
- * @leftmost: the leftmost node in the heap tree
- * Return: a ptr to the data that was stored in the root node of the heap,
- *  or NULL if function fails or heap is NULL.
+ * @lastnode: the last node of the heap tree
+ * Return: extracted data
  */
-void *ex_rebuild(heap_t *heap, binary_tree_node_t **ch_arr,
-		binary_tree_node_t **p_arr, int cue_size, int q_size,
-		binary_tree_node_t *leftmost)
+void *swapme(heap_t *heap, binary_tree_node_t *lastn)
 {
-	int i = 1, j = 1;
-	binary_tree_node_t *ret, *q_cur = NULL, *cue_cur = NULL, *current = NULL;
+	binary_tree_node_t *ret = NULL;
 	void *ret_data;
 
-	ch_arr[cue_size] = NULL, p_arr[q_size] = NULL, ret = heap->root;
-	ret_data = ret->data, q_cur = ret->left, cue_cur = ret->right, heap->root = q_cur;
-	while (q_cur)
+	ret = heap->root, ret_data = ret->data, heap->root = lastn;
+	if (lastn->parent->left == lastn)
+		lastn->parent->left = NULL;
+	else if (lastn->parent->right == lastn)
+		lastn->parent->right = NULL;
+	lastn->parent = NULL;
+	if (heap->size > 3)
 	{
-		current = q_cur->right, q_cur->right = cue_cur;
-		if (cue_cur)
-			cue_cur->parent = q_cur;
-		cue_cur = current, q_cur = q_cur->left;
+		lastn->left = ret->left, lastn->right = ret->right;
+		ret->left->parent = lastn, ret->right->parent = lastn;
 	}
-	heap->size--, leftmost->left = ch_arr[j], ch_arr[j]->parent = leftmost;
-	j++, leftmost->right = NULL;
-	if (ch_arr[j])
+	else if (heap->size == 3)
+		lastn->left = ret->left, ret->left->parent = lastn;
+	free(ret), heap->size--, ret = heap->root, titanic(ret);
+	return (ret_data);
+}
+
+/**
+ * titanic - function to sink the larger heap data
+ * @root: heap node with large data
+ */
+void titanic(binary_tree_node_t *root)
+{
+	binary_tree_node_t *c = root;
+	void *t;
+	int *lv, *rv, *pv;
+
+	while (c->left || c->right)
 	{
-		leftmost->right = ch_arr[j], ch_arr[j]->parent = leftmost, j++;
-		while (ch_arr[j] && p_arr[i])
+		pv = (int *)c->data;
+		if (c->left && c->right)
 		{
-			p_arr[i]->left = ch_arr[j], ch_arr[j]->parent = p_arr[i];
-			j++, p_arr[i]->right = NULL;
-			if (ch_arr[j])
-				p_arr[i]->right = ch_arr[j], ch_arr[j]->parent = p_arr[i], j++;
-			i++;
+			lv = (int *)c->left->data, rv = (int *)c->right->data;
+			if (*lv < *rv && *pv > *lv)
+				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
+			else if (*lv > *rv && *pv > *rv)
+				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
+			else
+				break;
+		}
+		else if (c->left)
+		{
+			lv = (int *)c->left->data;
+			if (*lv < *pv)
+				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
+			else
+				break;
+		}
+		else
+		{
+			rv = (int *)c->right->data;
+			if (*rv < *pv)
+				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
+			else
+				break;
 		}
 	}
-	free(ret);
-	return (ret_data);
 }

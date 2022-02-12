@@ -19,13 +19,6 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		return (heap->root);
 	}
 	leftmost = heap->root;
-	if (heap->size == 1)
-	{
-		tmp = binary_tree_node(NULL, data);
-		if (tmp)
-			leftmost->parent = tmp, tmp->left = leftmost, heap->size++, heap->root = tmp;
-		return (tmp);
-	}
 	while (leftmost && leftmost->left)
 		leftmost = leftmost->left, left_h++;
 	imba(heap->root, 0, left_h), shorty = imba_node(NULL), imba_node(shorty);
@@ -34,19 +27,11 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		if (shorty->left)
 			tmp = binary_tree_node(shorty, data), shorty->right = tmp;
 		else
-		{
-			tmp = binary_tree_node(shorty->parent, data);
-			if (tmp)
-				shorty->parent = tmp, tmp->left = shorty;
-		}
+			tmp = binary_tree_node(shorty, data), shorty->left = tmp;
 	}
 	else
-	{
-		tmp = binary_tree_node(leftmost->parent, data);
-		if (tmp)
-			leftmost->parent->left = tmp, leftmost->parent = tmp, tmp->left = leftmost;
-	}
-	heap->size++;
+		tmp = binary_tree_node(leftmost, data), leftmost->left = tmp;
+	heap->size++, heap->root = bubble_up(heap, tmp);
 	return (tmp);
 }
 
@@ -88,4 +73,47 @@ binary_tree_node_t *imba_node(binary_tree_node_t *node)
 	else if (im_shorty == node)
 		im_shorty = NULL;
 	return (im_shorty);
+}
+
+/**
+ * bubble_up - function to switch newly inserted nodes by function data_cmp
+ * @heap: a pointer to the heap in which the node has to be inserted
+ * @node: newly inserted node
+ * @return binary_tree_node_t* 
+ */
+binary_tree_node_t *bubble_up(heap_t *heap, binary_tree_node_t *node)
+{
+	binary_tree_node_t *tmp = NULL, *tmp_left = NULL, *tmp_right = NULL;
+	binary_tree_node_t *node_left = NULL, *node_right = NULL;
+
+	while (node->parent && heap->data_cmp(node->data, node->parent->data) < 0)
+	{
+		tmp = node->parent, tmp_left = tmp->left, tmp_right = tmp->right;
+		node_left = node->left, node_right = node->right; /*inits*/
+		if (tmp->parent && tmp->parent->left == tmp)
+			tmp->parent->left = node;
+		else if (tmp->parent && tmp->parent->right == tmp)
+			tmp->parent->right = node;
+		node->parent = tmp->parent, tmp->left = node_left, tmp->right = node_right;
+		if (node_left)
+			node_left->parent = tmp;
+		if (node_right)
+			node_right->parent = tmp;
+		if (tmp_left == node)
+		{
+			node->right = tmp_right, node->left = tmp, tmp->parent = node;
+			if (tmp_right)
+				tmp_right->parent = node;
+		}
+		else if (tmp_right == node)
+		{
+			node->left = tmp_left, node->right = tmp, tmp->parent = node;
+			if (tmp_left)
+				tmp_left->parent = node;
+		}
+	}
+	tmp = node;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	return (tmp);
 }

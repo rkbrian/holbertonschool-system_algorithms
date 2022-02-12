@@ -75,6 +75,10 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 /*helper functions*/
 void imba(binary_tree_node_t *node, int height, int left_h);
 binary_tree_node_t *imba_node(binary_tree_node_t *node);
+binary_tree_node_t *bubble_up(heap_t *heap, binary_tree_node_t *node);
+void *swapme(heap_t *heap, binary_tree_node_t *lastn);
+void titanic(binary_tree_node_t *root);
+
 int queue_store(queue_q *queen, const binary_tree_node_t *node);
 binary_tree_node_t *queue_remove(queue_q *queen,
 				const binary_tree_node_t *node);
