@@ -66,7 +66,7 @@ void imba(binary_tree_node_t *node, int height, int left_h)
  */
 binary_tree_node_t *imba_node(binary_tree_node_t *node)
 {
-	static binary_tree_node_t *im_shorty = NULL;
+	static binary_tree_node_t *im_shorty;
 
 	if (node && im_shorty != node)
 		im_shorty = node;
@@ -79,7 +79,7 @@ binary_tree_node_t *imba_node(binary_tree_node_t *node)
  * bubble_up - function to switch newly inserted nodes by function data_cmp
  * @heap: a pointer to the heap in which the node has to be inserted
  * @node: newly inserted node
- * @return binary_tree_node_t* 
+ * Return: new root
  */
 binary_tree_node_t *bubble_up(heap_t *heap, binary_tree_node_t *node)
 {
