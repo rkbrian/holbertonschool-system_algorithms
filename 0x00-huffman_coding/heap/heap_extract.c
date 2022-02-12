@@ -107,6 +107,7 @@ void *swapme(heap_t *heap, binary_tree_node_t *lastn)
 
 /**
  * titanic - function to sink the larger heap data
+ * @heap: a pointer to the heap from which to extract the value
  * @root: heap node with large data
  */
 void titanic(heap_t *heap, binary_tree_node_t *root)
