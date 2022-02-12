@@ -34,10 +34,10 @@ int main(void)
 {
     heap_t *priority_queue;
     char data[] = {
-        'a', 'b', 'c', 'd', 'e', 'f'
+        'H', 'o', 'l', 'b', 'e', 'r', 't', 'o', 'n'
     };
     size_t freq[] = {
-        6, 11, 12, 13, 16, 36
+        4, 32, 5, 12, 68, 6, 11, 12, 1
     };
     size_t size = sizeof(data) / sizeof(data[0]);
 
