@@ -15,6 +15,12 @@ void heap_delete(heap_t *heap, void (*free_data)(void *))
 	free(heap);
 }
 
+/**
+ * chain_free - free all node recursively from given root/parent node
+ * @node: the given root/parent node
+ * @free_data: a pointer to a function that will be used to
+ *  free the content of a node
+ */
 void chain_free(binary_tree_node_t *node, void (*free_data)(void *))
 {
 	binary_tree_node_t *left_node = NULL, *right_node = NULL;
