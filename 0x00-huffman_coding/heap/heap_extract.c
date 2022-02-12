@@ -101,7 +101,7 @@ void *swapme(heap_t *heap, binary_tree_node_t *lastn)
 	}
 	else if (heap->size == 3)
 		lastn->left = ret->left, ret->left->parent = lastn;
-	free(ret), heap->size--, ret = heap->root, titanic(ret);
+	free(ret), heap->size--, ret = heap->root, titanic(heap, ret);
 	return (ret_data);
 }
 
@@ -109,37 +109,34 @@ void *swapme(heap_t *heap, binary_tree_node_t *lastn)
  * titanic - function to sink the larger heap data
  * @root: heap node with large data
  */
-void titanic(binary_tree_node_t *root)
+void titanic(heap_t *heap, binary_tree_node_t *root)
 {
 	binary_tree_node_t *c = root;
 	void *t;
-	int *lv, *rv, *pv;
 
 	while (c->left || c->right)
 	{
-		pv = (int *)c->data;
 		if (c->left && c->right)
 		{
-			lv = (int *)c->left->data, rv = (int *)c->right->data;
-			if (*lv < *rv && *pv > *lv)
+			if (heap->data_cmp(c->left->data, c->right->data) < 0 &&
+			heap->data_cmp(c->left->data, c->data) < 0)
 				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
-			else if (*lv > *rv && *pv > *rv)
+			else if (heap->data_cmp(c->left->data, c->right->data) > 0 &&
+			heap->data_cmp(c->right->data, c->data) < 0)
 				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
 			else
 				break;
 		}
 		else if (c->left)
 		{
-			lv = (int *)c->left->data;
-			if (*lv < *pv)
+			if (heap->data_cmp(c->left->data, c->data))
 				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
 			else
 				break;
 		}
 		else
 		{
-			rv = (int *)c->right->data;
-			if (*rv < *pv)
+			if (heap->data_cmp(c->right->data, c->data))
 				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
 			else
 				break;

@@ -78,7 +78,9 @@ void imba(binary_tree_node_t *node, int height, int left_h);
 binary_tree_node_t *imba_node(binary_tree_node_t *node);
 binary_tree_node_t *bubble_up(heap_t *heap, binary_tree_node_t *node);
 void *swapme(heap_t *heap, binary_tree_node_t *lastn);
-void titanic(binary_tree_node_t *root);
+
+void titanic(heap_t *heap, binary_tree_node_t *root);
+
 int queue_store(queue_q *queen, const binary_tree_node_t *node);
 binary_tree_node_t *queue_remove(queue_q *queen,
 				const binary_tree_node_t *node);
@@ -86,7 +88,6 @@ void *ex_rebuild(heap_t *heap, binary_tree_node_t **ch_arr,
 		binary_tree_node_t **p_arr, int cue_size, int q_size,
 		binary_tree_node_t *leftmost);
 void chain_free(binary_tree_node_t *node, void (*free_data)(void *));
-void kitchen_sink(binary_tree_node_t *root);
 int freak_cmp(void *p1, void *p2);
 
 #endif /*HEAP_H*/

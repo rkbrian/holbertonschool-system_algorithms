@@ -22,6 +22,6 @@ typedef struct symbol_s
 symbol_t *symbol_create(char data, size_t freq);
 /*helper functions*/
 void sortof(char *data, size_t *freq, size_t size);
-
+int bested_print(char *buffer, void *data);
 
 #endif /*HUFFMAN_H*/
