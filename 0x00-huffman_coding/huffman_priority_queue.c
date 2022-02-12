@@ -12,7 +12,7 @@
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 {
 	heap_t *heap;
-	binary_tree_node_t *node_arr[size];
+	binary_tree_node_t **node_arr;
 	symbol_t *symbiote = NULL;
 	size_t i = 0, level = 1;
 
@@ -21,6 +21,12 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 	heap = heap_create(NULL);
 	if (!heap)
 		return (NULL);
+	node_arr = malloc(sizeof(binary_tree_node_t) * size);
+	if (!node_arr)
+	{
+		free(heap);
+		return (NULL);
+	}
 	sortof(data, freq, size);
 	while (i < size)
 	{
@@ -42,6 +48,7 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 		}
 		level++;
 	}
+	free(node_arr);
 	return (heap);
 }
 
