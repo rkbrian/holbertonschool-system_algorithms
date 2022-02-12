@@ -80,7 +80,7 @@ binary_tree_node_t *queue_remove(queue_q *queen,
 /**
  * swapme - function to swap the last node with the root (to be extracted)
  * @heap: a pointer to the heap from which to extract the value
- * @lastnode: the last node of the heap tree
+ * @lastn: the last node of the heap tree
  * Return: extracted data
  */
 void *swapme(heap_t *heap, binary_tree_node_t *lastn)
