@@ -73,6 +73,7 @@ void *heap_extract(heap_t *heap); /*3*/
 void heap_delete(heap_t *heap, void (*free_data)(void *)); /*4*/
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size); /*6*/
 int huffman_extract_and_insert(heap_t *priority_queue); /*7*/
+binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);/*8*/
 /*helper functions*/
 void imba(binary_tree_node_t *node, int height, int left_h); /*2*/
 binary_tree_node_t *imba_node(binary_tree_node_t *node); /*2*/
@@ -84,5 +85,7 @@ binary_tree_node_t *queue_remove(queue_q *queen,
 				const binary_tree_node_t *node); /*3*/
 void chain_free(binary_tree_node_t *node, void (*free_data)(void *)); /*4*/
 int freak_cmp(void *p1, void *p2); /*6*/
+void unzip_data(binary_tree_node_t *root); /*8*/
+int regular_cmp(void *p1, void *p2); /*8*/
 
 #endif /*HEAP_H*/

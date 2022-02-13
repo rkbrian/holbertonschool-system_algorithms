@@ -15,4 +15,6 @@ prio: # target function: huffman_priority_queue.c
 	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 6-main.c symbol.c huffman_priority_queue.c binary_tree_print.c -o prio
 extract: # target function: huffman_extract_and_insert.c
 	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 7-main.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c binary_tree_print.c -o extract
-.PHONY: heap_create binary_tree_node heap_insert heap_extract heap_delete symbol_create
+huffman_tree: # target function: huffman_tree.c
+	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 8-main.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c huffman_tree.c binary_tree_print.c -o huffman_tree
+.PHONY: heap_create binary_tree_node heap_insert heap_extract heap_delete symbol_create prio extract huffman_tree
