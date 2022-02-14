@@ -60,6 +60,18 @@ int main(void)
 
     huffman_extract_and_insert(priority_queue);
     binary_tree_print(priority_queue->root, nested_print);
+    printf("\n");
+
+    huffman_extract_and_insert(priority_queue);
+    binary_tree_print(priority_queue->root, nested_print);
+    printf("\n");
+
+    huffman_extract_and_insert(priority_queue);
+    binary_tree_print(priority_queue->root, nested_print);
+    printf("\n");
+
+    huffman_extract_and_insert(priority_queue);
+    binary_tree_print(priority_queue->root, nested_print);
 
     return (EXIT_SUCCESS);
 }
