@@ -66,9 +66,16 @@ void unzip_data(binary_tree_node_t *root)
 	unzip_data(curr_left), unzip_data(curr_right);
 }
 
+/**
+ * greedy_connect - using greedy algorithm to make and connect nodes
+ * @q: queue (array of nodes) that stores nodes
+ * @node: child node to be connected
+ * Return: parent node 
+ */
 binary_tree_node_t *greedy_connect(queue_q *q, binary_tree_node_t *node)
 {
-	binary_tree_node_t *l_n = NULL, *par = NULL, *prep = NULL, *ll = NULL, *lr = NULL;
+	binary_tree_node_t *l_n = NULL, *par = NULL;
+	binary_tree_node_t *prep = NULL, *ll = NULL, *lr = NULL;
 	size_t tmp = 0;
 	char da = -1;
 
@@ -93,7 +100,12 @@ binary_tree_node_t *greedy_connect(queue_q *q, binary_tree_node_t *node)
 	return (par);
 }
 
-
+/**
+ * combine_data - function to copy and combine data sets from 2 nodes into 1
+ * @na: node a
+ * @nb: node b, if it is null, make a copy of node a and return it
+ * Return: new node with combined data
+ */
 binary_tree_node_t *combine_data(binary_tree_node_t *na,
 	binary_tree_node_t *nb)
 {
