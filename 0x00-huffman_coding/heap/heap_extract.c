@@ -9,8 +9,7 @@
 void *heap_extract(heap_t *heap)
 {
 	binary_tree_node_t *leftmost = NULL, *q_cur = NULL, *ret, *last_node = NULL;
-	int left_h = 1, cue_flag = 0;
-	queue_q *q;
+	int left_h = 1;
 	void *ret_d;
 
 	if (!heap)
@@ -21,60 +20,35 @@ void *heap_extract(heap_t *heap)
 		free(ret), heap->size--;
 		return (ret_d);
 	}
-	leftmost = heap->root, q = malloc(sizeof(queue_q));
-	if (!q)
-		return (NULL);
-	q->head = 1, q->tail = 0, queue_store(q, heap->root);
+	leftmost = heap->root, q_cur = heap->root;
 	while (leftmost && leftmost->left)
 		leftmost = leftmost->left, left_h++;
-	while ((q->tail + 1) % MAX_Q_SIZE != q->head)
-	{
-		q_cur = queue_remove(q, q_cur);
-		if (q_cur)
-		{
-			if (q_cur->left)
-				queue_store(q, q_cur->left);
-			if (q_cur->right)
-				queue_store(q, q_cur->right);
-		}
-		if (q_cur == leftmost)
-			cue_flag++;
-		if (cue_flag && q_cur)
-			last_node = q_cur;
-	}
-	free(q), ret_d = swapme(heap, last_node);
+	last_node = keep_going(q_cur, 1, left_h);
+	ret_d = swapme(heap, last_node);
 	return (ret_d);
 }
 
 /**
- * queue_store - store data to queue
- * @queen: the queue
- * @node: tree node of the same depth (from root)
- * Return: 0 if success, 1 if failed
+ * keep_going - function to find the last node recursively
+ * @node: current node to be tested if it is the last node
+ * @cur: current node height
+ * @h: max tree height
+ * Return: the last node
  */
-int queue_store(queue_q *queen, const binary_tree_node_t *node)
+binary_tree_node_t *keep_going(binary_tree_node_t *node, int cur, int h)
 {
-	if ((queen->tail + 2) % MAX_Q_SIZE == queen->head) /* if queue is full */
-		return (1);
-	queen->tail = (queen->tail + 1) % MAX_Q_SIZE;
-	queen->queue_arr[queen->tail] = (binary_tree_node_t *)node;
-	return (0);
-}
+	static binary_tree_node_t *lastn;
 
-/**
- * queue_remove - extract node data from queue
- * @queen: the queue
- * @node: tree node of the same depth (from root)
- * Return: node pointer with acquired data if success, null if failed
- */
-binary_tree_node_t *queue_remove(queue_q *queen,
-				const binary_tree_node_t *node)
-{
-	if ((queen->tail + 1) % MAX_Q_SIZE == queen->head) /* if queue is empty */
-		return (NULL);
-	node = queen->queue_arr[queen->head];
-	queen->head = (queen->head + 1) % MAX_Q_SIZE;
-	return ((binary_tree_node_t *)node);
+	if (cur == h)
+	{
+		lastn = node;
+		return (lastn);
+	}
+	if (node->left)
+		keep_going(node->left, cur + 1, h);
+	if (node->right)
+		keep_going(node->right, cur + 1, h);
+	return (lastn);
 }
 
 /**
@@ -143,4 +117,35 @@ void titanic(heap_t *heap, binary_tree_node_t *root)
 				break;
 		}
 	}
+}
+
+/**
+ * queue_store - store data to queue
+ * @queen: the queue
+ * @node: tree node of the same depth (from root)
+ * Return: 0 if success, 1 if failed
+ */
+int queue_store(queue_q *queen, const binary_tree_node_t *node)
+{
+	if ((queen->tail + 2) % MAX_Q_SIZE == queen->head) /* if queue is full */
+		return (1);
+	queen->tail = (queen->tail + 1) % MAX_Q_SIZE;
+	queen->queue_arr[queen->tail] = (binary_tree_node_t *)node;
+	return (0);
+}
+
+/**
+ * queue_remove - extract node data from queue
+ * @queen: the queue
+ * @node: tree node of the same depth (from root)
+ * Return: node pointer with acquired data if success, null if failed
+ */
+binary_tree_node_t *queue_remove(queue_q *queen,
+				const binary_tree_node_t *node)
+{
+	if ((queen->tail + 1) % MAX_Q_SIZE == queen->head) /* if queue is empty */
+		return (NULL);
+	node = queen->queue_arr[queen->head];
+	queen->head = (queen->head + 1) % MAX_Q_SIZE;
+	return ((binary_tree_node_t *)node);
 }

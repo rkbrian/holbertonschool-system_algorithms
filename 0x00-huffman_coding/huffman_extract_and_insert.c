@@ -19,7 +19,7 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 	if (priority_queue->data_cmp == freak_cmp)
 	{
 		new_node = (binary_tree_node_t *)heap_extract(priority_queue);
-		data_a = ((symbol_t *)new_node->data)->freq; /*, free(new_node);*/
+		data_a = ((symbol_t *)new_node->data)->freq, free(new_node);
 		new_node = (binary_tree_node_t *)heap_extract(priority_queue);
 		data_b = ((symbol_t *)new_node->data)->freq;
 		ab = data_a + data_b, ((symbol_t *)new_node->data)->data = data;
