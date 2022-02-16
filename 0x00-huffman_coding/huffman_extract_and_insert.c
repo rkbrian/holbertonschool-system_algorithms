@@ -56,3 +56,34 @@ int regular_cmp(void *p1, void *p2)
 		return (-1);
 	return (0);
 }
+
+/**
+ * queue_store - store data to queue
+ * @queen: the queue
+ * @node: tree node of the same depth (from root)
+ * Return: 0 if success, 1 if failed
+ */
+int queue_store(queue_q *queen, const binary_tree_node_t *node)
+{
+	if ((queen->tail + 2) % MAX_Q_SIZE == queen->head) /* if queue is full */
+		return (1);
+	queen->tail = (queen->tail + 1) % MAX_Q_SIZE;
+	queen->queue_arr[queen->tail] = (binary_tree_node_t *)node;
+	return (0);
+}
+
+/**
+ * queue_remove - extract node data from queue
+ * @queen: the queue
+ * @node: tree node of the same depth (from root)
+ * Return: node pointer with acquired data if success, null if failed
+ */
+binary_tree_node_t *queue_remove(queue_q *queen,
+				const binary_tree_node_t *node)
+{
+	if ((queen->tail + 1) % MAX_Q_SIZE == queen->head) /* if queue is empty */
+		return (NULL);
+	node = queen->queue_arr[queen->head];
+	queen->head = (queen->head + 1) % MAX_Q_SIZE;
+	return ((binary_tree_node_t *)node);
+}
