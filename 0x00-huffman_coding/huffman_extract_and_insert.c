@@ -39,6 +39,28 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 }
 
 /**
+ * combine_data - function to copy and combine data sets from 2 nodes into 1
+ * @na: node a
+ * @nb: node b, if it is null, make a copy of node a and return it
+ * Return: new node with combined data
+ */
+binary_tree_node_t *combine_data(binary_tree_node_t *na,
+	binary_tree_node_t *nb)
+{
+	binary_tree_node_t *new_n = NULL;
+	char dataa;
+	size_t freqa, freqb;
+
+	freqa = ((symbol_t *)(na->data))->freq;
+	if (!nb)
+		dataa = ((symbol_t *)(na->data))->data, freqb = 0;
+	else
+		dataa = -1, freqb = ((symbol_t *)(nb->data))->freq;
+	new_n = binary_tree_node(NULL, symbol_create(dataa, freqa + freqb));
+	return (new_n);
+}
+
+/**
  * regular_cmp - Compares two frequencies in 2 unzipped data
  * @p1: First pointer
  * @p2: Second pointer
