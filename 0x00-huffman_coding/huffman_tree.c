@@ -16,11 +16,11 @@ binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 	char da = -1; /*char -1 considered junks in heap, no free*/
 	queue_q *q; /*for sorted symbol nodes*/
 
-	if (size < 2)
-		return (NULL);
 	huff_t = huffman_priority_queue(data, freq, size);
 	if (!huff_t)
 		return (NULL);
+	if (size < 2)
+		return (huff_t->root);
 	q = malloc(sizeof(queue_q));
 	if (!q)
 	{
@@ -70,7 +70,7 @@ void unzip_data(binary_tree_node_t *root)
  * greedy_connect - using greedy algorithm to make and connect nodes
  * @q: queue (array of nodes) that stores nodes
  * @node: child node to be connected
- * Return: parent node 
+ * Return: parent node
  */
 binary_tree_node_t *greedy_connect(queue_q *q, binary_tree_node_t *node)
 {
