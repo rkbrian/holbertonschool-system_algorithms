@@ -93,25 +93,25 @@ void titanic(heap_t *heap, binary_tree_node_t *root)
 	{
 		if (c->left && c->right)
 		{
-			if (heap->data_cmp(c->left->data, c->right->data) < 0 &&
-			heap->data_cmp(c->left->data, c->data) < 0)
+			if (heap->data_cmp(c->left->data, c->right->data) <= 0 &&
+			heap->data_cmp(c->left->data, c->data) <= 0)
 				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
-			else if (heap->data_cmp(c->left->data, c->right->data) > 0 &&
-			heap->data_cmp(c->right->data, c->data) < 0)
+			else if (heap->data_cmp(c->left->data, c->right->data) >= 0 &&
+			heap->data_cmp(c->right->data, c->data) <= 0)
 				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
 			else
 				break;
 		}
 		else if (c->left)
 		{
-			if (heap->data_cmp(c->left->data, c->data) < 0)
+			if (heap->data_cmp(c->left->data, c->data) <= 0)
 				t = c->left->data, c->left->data = c->data, c->data = t, c = c->left;
 			else
 				break;
 		}
 		else
 		{
-			if (heap->data_cmp(c->right->data, c->data) < 0)
+			if (heap->data_cmp(c->right->data, c->data) <= 0)
 				t = c->right->data, c->right->data = c->data, c->data = t, c = c->right;
 			else
 				break;
