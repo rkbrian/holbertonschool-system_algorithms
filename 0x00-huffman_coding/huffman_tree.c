@@ -21,6 +21,6 @@ binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 	while (i)
 		i = huffman_extract_and_insert(huff_t);
 	node = (binary_tree_node_t *)(huff_t->root->data);
-	free(huff_t->root), huff_t->root = node;
-	return (huff_t->root);
+	heap_delete(huff_t, NULL);
+	return (node);
 }
