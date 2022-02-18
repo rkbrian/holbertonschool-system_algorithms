@@ -49,19 +49,6 @@ enum directing
 	right_d
 };
 
-/**
- * struct queue_s - struct of
- * @head: head position index
- * @tail: tail position index
- * @queue_arr: array of tree nodes
- */
-typedef struct queue_s
-{
-	int head; /* position */
-	int tail; /* position */
-	binary_tree_node_t *queue_arr[MAX_Q_SIZE]; /* array of tree nodes */
-} queue_q;
-
 /*binary tree print*/
 void binary_tree_print(const binary_tree_node_t *root,
 	int (*print_data)(char *, void *));
@@ -81,6 +68,8 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 int huffman_extract_and_insert(heap_t *priority_queue);
 /*8*/
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);
+/*9*/
+int huffman_codes(char *data, size_t *freq, size_t size);
 /*helper functions: 2*/
 void imba(binary_tree_node_t *node, int height, int left_h);
 binary_tree_node_t *imba_node(binary_tree_node_t *node);
@@ -94,5 +83,8 @@ void titanic(heap_t *heap, binary_tree_node_t *root);
 void chain_free(binary_tree_node_t *node, void (*free_data)(void *));
 /*6*/
 int freak_cmp(void *p1, void *p2);
+/*9*/
+void simbakimba(binary_tree_node_t *node, int *kimba, size_t simba);
+size_t binary_tree_height(const binary_tree_node_t *tree);
 
 #endif /*HEAP_H*/

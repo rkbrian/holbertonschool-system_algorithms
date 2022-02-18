@@ -19,4 +19,4 @@ Remember that in our priority queue, each node stores a leaf node that stores ou
 
 So, at the end of this process, our priority queue will see its size decreased by one (we extract two, we insert back one). Note that we will use the value -1 as the char data for the new symbol we will create. (In the example below, we print it as a dollar sign)
 #### 8. Huffman coding - Step 3: Build Huffman tree
-#### 
+#### 9. Huffman coding - Step 4: Huffman codes

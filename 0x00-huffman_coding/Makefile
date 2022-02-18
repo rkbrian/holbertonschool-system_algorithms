@@ -17,6 +17,8 @@ extract: # target function: huffman_extract_and_insert.c
 	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 7-main.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c binary_tree_print.c -o extract
 huffman_tree: # target function: huffman_tree.c
 	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 8-main.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c huffman_tree.c binary_tree_print.c -o huffman_tree
-test:
+test: # target function: huffman_tree.c -------- for edge case of same frequency all over
 	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 8-main-2.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c huffman_tree.c binary_tree_print.c -o test
-.PHONY: heap_create binary_tree_node heap_insert heap_extract heap_delete symbol_create prio extract huffman_tree
+huffman_codes: # target function: huffman_codes.c
+	gcc -Wall -Wextra -Werror -pedantic -Iheap/ -I./ heap/*.c 9-main.c symbol.c huffman_priority_queue.c huffman_extract_and_insert.c huffman_tree.c huffman_codes.c binary_tree_print.c -o huffman_codes
+.PHONY: heap_create binary_tree_node heap_insert heap_extract heap_delete symbol_create prio extract huffman_tree test
