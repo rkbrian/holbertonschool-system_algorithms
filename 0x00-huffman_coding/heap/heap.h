@@ -94,15 +94,5 @@ void titanic(heap_t *heap, binary_tree_node_t *root);
 void chain_free(binary_tree_node_t *node, void (*free_data)(void *));
 /*6*/
 int freak_cmp(void *p1, void *p2);
-/*7*/
-int regular_cmp(void *p1, void *p2);
-int queue_store(queue_q *queen, const binary_tree_node_t *node);
-binary_tree_node_t *queue_remove(queue_q *queen,
-				const binary_tree_node_t *node);
-/*8*/
-void unzip_data(binary_tree_node_t *root);
-binary_tree_node_t *greedy_connect(queue_q *queen, binary_tree_node_t *node);
-binary_tree_node_t *combine_data(binary_tree_node_t *na,
-	binary_tree_node_t *nb);
 
 #endif /*HEAP_H*/
