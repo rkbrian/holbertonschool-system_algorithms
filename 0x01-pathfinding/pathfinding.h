@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "queues.h"
 #include "graphs.h"
 
@@ -14,8 +15,8 @@
  */
 typedef struct point_s
 {
-    int x;
-    int y;
+	int x;
+	int y;
 } point_t;
 
 enum directing
@@ -29,5 +30,8 @@ enum directing
 /*major functions*/
 queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t const *start, point_t const *target);
+/*helper functions*/
+queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
+		int y, int x, point_t const *target);
 
 #endif /*PATHFINDING_H*/
