@@ -9,7 +9,6 @@
 
 /**
  * struct point_s - Structure storing coordinates
- *
  * @x: X coordinate
  * @y: Y coordinate
  */
@@ -19,6 +18,9 @@ typedef struct point_s
 	int y;
 } point_t;
 
+/**
+ * enum directing - directions, set up for possible future use
+ */
 enum directing
 {
 	RIGHT,

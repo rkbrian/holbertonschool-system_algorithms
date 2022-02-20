@@ -52,32 +52,42 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		free(q);
 	return (q);
 }
-
+/**
+ * track_tree - backtracking recursive function
+ * @mazecpy: copy of the ptr to a read-only 2d array, 0 represents
+ *  a walkable cell, 1 represents a blocked cell
+ * @q: a queue
+ * @rows: the number of rows of map
+ * @cols: the number of columns of map
+ * @y: current coordinate y
+ * @x: current coordinate x
+ * @target: stores the coordinates of the target point
+ * Return: queue
+ */
 queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		int y, int x, point_t const *target)
 {
 	point_t *p;
 
-	if (y >= 0 && x >= 0 && y < rows && x < cols && mazecpy[x][y] == '0')
+	if (y < 0 || x < 0 || y >= rows || x >= cols || mazecpy[x][y] == '1')
+                return (NULL);
+	mazecpy[y][x] = '1';
+	printf("Checking coordinates [%d, %d]\n", x, y);
+	if ((x == target->x && y == target->y) ||
+		track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
+		track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
+		track_tree(mazecpy, q, rows, cols, y, x - 1, target) ||
+		track_tree(mazecpy, q, rows, cols, y - 1, x, target))
 	{
-		mazecpy[y][x] = '1';
-		printf("Checking coordinates [%d, %d]\n", x, y);
-		if ((x == target->x && y == target->y) ||
-			track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
-			track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
-			track_tree(mazecpy, q, rows, cols, y, x - 1, target) ||
-			track_tree(mazecpy, q, rows, cols, y - 1, x, target))
+		p = malloc(sizeof(point_t));
+		if (!p)
 		{
-			p = malloc(sizeof(point_t));
-			if (!p)
-			{
-				queue_delete(q);
-				return (NULL);
-			}
-			p->x = x, p->y = y;
-			queue_push_front(q, p);
-			return (q);
+			queue_delete(q);
+			return (NULL);
 		}
+		p->x = x, p->y = y;
+		queue_push_front(q, p);
+		return (q);
 	}
 	return (NULL);
 }
