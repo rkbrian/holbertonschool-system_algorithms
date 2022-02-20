@@ -6,7 +6,6 @@
 /**
  * enum edge_type_e - Enumerates the different types of
  * connection between two vertices
- *
  * @UNIDIRECTIONAL: The connection is made only in one way
  * @BIDIRECTIONAL: The connection is made in two ways
  */
@@ -22,7 +21,6 @@ typedef struct vertex_s vertex_t;
 /**
  * struct edge_s - Node in the linked list of edges for a given vertex
  * A single vertex can have many edges (connections)
- *
  * @dest: Pointer to the connected vertex
  * @next: Pointer to the next edge
  * @weight: Weight of the edge (for weighted graphs)
@@ -34,10 +32,8 @@ typedef struct edge_s
 	int		weight;
 } edge_t;
 
-
 /**
  * struct vertex_s - Node in the linked list of vertices in the adjency list
- *
  * @index: Index of the vertex in the adjency list.
  *   When a new vertex is added, this index becomes the number of vertices
  *   in the adjency list before it is added.
@@ -116,32 +112,27 @@ typedef struct graph_s
 
 /**
  * graph_create - Initializes a graph structure
- *
  * Return: A pointer to the allocated structure, NULL on failure
  */
 graph_t *graph_create(void);
 
 /**
  * graph_add_vertex - Add a vertex in a graph
- *
  * @graph: Pointer to the graph data structure
  * @str: String representing the new vertex
  * @x: X coordinate of the vertex
  * @y: Y coordinate of the vertex
- *
  * Return: A pointer to the created vertex, NULL on failure
  */
 vertex_t *graph_add_vertex(graph_t *graph, char const *str, int x, int y);
 
 /**
  * graph_add_edge - Add an edge between two vertices
- *
  * @graph: Pointer to the graph data structure
  * @src: String representing the vertex to make the connection from
  * @dest: String representing the vertex to connect to
  * @weight: Weight of the edge
  * @type: Connection type (Unidirectional or bidirectionnal)
- *
  * Return: 1 on success, 0 on failure
  */
 int graph_add_edge(graph_t *graph, char const *src, char const *dest,
@@ -149,14 +140,12 @@ int graph_add_edge(graph_t *graph, char const *src, char const *dest,
 
 /**
  * graph_delete - Deallocates a graph
- *
  * @graph: Pointer to the graph to be deleted
  */
 void graph_delete(graph_t *graph);
 
 /**
  * graph_display - Utility function to display the adjency linked list
- *
  * @graph: Pointer to the graph structure to be displayed
  */
 void graph_display(graph_t const *graph);

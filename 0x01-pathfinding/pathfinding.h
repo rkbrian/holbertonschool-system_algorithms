@@ -44,5 +44,7 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		int y, int x, point_t const *target);
 queue_t *store_curr(int x, int y, queue_t *q);
 /*1*/
+queue_t *track_node(queue_t *q, vertex_t *v, vertex_t *target);
+queue_t *store_str(queue_t *q, char *str);
 
 #endif /*PATHFINDING_H*/
