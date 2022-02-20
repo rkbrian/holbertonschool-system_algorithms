@@ -92,7 +92,7 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
  * @q: current queue
  * Return: queue with added path, or NULL if allocation failed
  */
-queue_t *store_curr(int x, int y, queue_node_t *q)
+queue_t *store_curr(int x, int y, queue_t *q)
 {
 	point_t *p;
 

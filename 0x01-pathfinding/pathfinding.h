@@ -42,7 +42,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 /*0*/
 queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		int y, int x, point_t const *target);
-queue_t *store_curr(int x, int y, queue_node_t *q);
+queue_t *store_curr(int x, int y, queue_t *q);
 /*1*/
 
 #endif /*PATHFINDING_H*/
