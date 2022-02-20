@@ -20,6 +20,10 @@ typedef struct point_s
 
 /**
  * enum directing - directions, set up for possible future use
+ * @RIGHT: right
+ * @BOTTOM: bottom
+ * @LEFT: left
+ * @TOP: top
  */
 enum directing
 {
@@ -32,6 +36,8 @@ enum directing
 /*major functions*/
 queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t const *start, point_t const *target);
+queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
+	vertex_t const *target);
 /*helper functions*/
 queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		int y, int x, point_t const *target);

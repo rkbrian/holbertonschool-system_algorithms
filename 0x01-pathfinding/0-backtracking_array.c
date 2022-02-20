@@ -1,4 +1,5 @@
 #include "pathfinding.h"
+#include "queues.h"
 
 /**
  * backtracking_array - a function that searches for the first path from a
@@ -45,8 +46,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	}
 	if (track_tree(mazecpy, q, rows, cols, start->y, start->x, target) == NULL)
 		queue_delete(q), q = NULL;
-	while (map_row > 0)
-		free(mazecpy[map_row]), map_row--;
+	for (map_row = 0; map_row < rows; map_row++)
+		free(mazecpy[map_row]);
 	free(mazecpy);
 	return (q);
 }
@@ -68,9 +69,9 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 	point_t *p;
 
 	if (y < 0 || x < 0 || y >= rows || x >= cols || mazecpy[x][y] == '1')
-                return (NULL);
-	mazecpy[y][x] = '1';
+		return (NULL);
 	printf("Checking coordinates [%d, %d]\n", x, y);
+	mazecpy[y][x] = '1';
 	if ((x == target->x && y == target->y) ||
 		track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
 		track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
@@ -84,8 +85,9 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 			return (NULL);
 		}
 		p->x = x, p->y = y;
-		queue_push_front(q, p);
+		queue_push_front(q, (void *)p);
 		return (q);
 	}
+        queue_delete(q);
 	return (NULL);
 }
