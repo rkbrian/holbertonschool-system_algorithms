@@ -47,7 +47,7 @@ queue_t *track_node(queue_t *q, vertex_t *v, vertex_t *target)
 	while (next_node && next_node->x == 1)
 		next_node = next_node->next;
 	if (next_node && track_node(q, next_node, target))
-		return (store_str(q, next_node->content));
+		return (store_str(q, v->content));
 	return (NULL);
 }
 
