@@ -15,14 +15,13 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 {
 	int map_row;
 	queue_t *q, *ret_ptr = NULL;
-	graph_t *graph_cpy;
 
 	if (!graph || !start || !target)
 		return (NULL);
 	q = queue_create();
 	if (!q)
 		return (NULL);
-	ret_ptr = track_node(q, start, target);
+	ret_ptr = track_node(q, (vertex_t *)start, (vertex_t *)target);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
 		queue_delete(q), q = NULL;
 	return (q);
