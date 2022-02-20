@@ -37,14 +37,14 @@ queue_t *track_node(queue_t *q, vertex_t *v, vertex_t *target)
 {
 	vertex_t *next_node = NULL;
 
-	if (!q || !v || v->x == 1)
+	if (!q || !v)
 		return (NULL);
 	printf("Checking %s\n", v->content);
 	v->x = 1;
 	if (v == target)
 		return (store_str(q, v->content));
 	next_node = v->edges->dest;
-	while (next_node)
+	while (next_node && next_node->x == 1)
 		next_node = next_node->next;
 	if (next_node && track_node(q, next_node, target))
 		return (store_str(q, v->content));
