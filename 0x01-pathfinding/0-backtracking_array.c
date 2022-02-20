@@ -74,13 +74,13 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 	/*recur func checks in order of: check exit, go right, down, left, up*/
 	if (x == target->x && y == target->y)
 		return (store_curr(x, y, q));
-	else if (track_tree(mazecpy, q, rows, cols, y, x + 1, target))
+	if (track_tree(mazecpy, q, rows, cols, y, x + 1, target))
 		return (store_curr(x, y, q));
-	else if (track_tree(mazecpy, q, rows, cols, y + 1, x, target))
+	if (track_tree(mazecpy, q, rows, cols, y + 1, x, target))
 		return (store_curr(x, y, q));
-	else if (track_tree(mazecpy, q, rows, cols, y, x - 1, target))
+	if (track_tree(mazecpy, q, rows, cols, y, x - 1, target))
 		return (store_curr(x, y, q));
-	else if (track_tree(mazecpy, q, rows, cols, y - 1, x, target))
+	if (track_tree(mazecpy, q, rows, cols, y - 1, x, target))
 		return (store_curr(x, y, q));
 	return (NULL);
 }
