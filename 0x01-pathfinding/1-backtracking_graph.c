@@ -13,7 +13,6 @@
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target)
 {
-	int map_row;
 	queue_t *q, *ret_ptr = NULL;
 
 	if (!graph || !start || !target)
@@ -36,7 +35,6 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  */
 queue_t *track_node(queue_t *q, vertex_t *v, vertex_t *target)
 {
-	queue_t *q;
 	vertex_t *next_node = NULL;
 
 	if (!q || !v || v->x == 1)
