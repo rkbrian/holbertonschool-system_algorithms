@@ -44,7 +44,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 			return (NULL);
 		}
 	}
-	ret_ptr = track_tree(mazecpy, q, rows, cols, start->y, start->x, target);
+        ret_ptr = track_tree(mazecpy, q, rows, cols, start->y, start->x, target);
 	if (!ret_ptr) /*recursive function that return visited queue*/
 		queue_delete(q), q = NULL;
 	while (map_row >= 0)
@@ -71,17 +71,15 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		return (NULL); /*boarder line or wall*/
 	printf("Checking coordinates [%d, %d]\n", x, y);
 	mazecpy[y][x] = '1';
-	/*recur func checks in order of: check exit, go right, down, left, up*/
-	if (x == target->x && y == target->y)
-		return (store_curr(x, y, q));
-	if (track_tree(mazecpy, q, rows, cols, y, x + 1, target))
-		return (store_curr(x, y, q));
-	if (track_tree(mazecpy, q, rows, cols, y + 1, x, target))
-		return (store_curr(x, y, q));
-	if (track_tree(mazecpy, q, rows, cols, y, x - 1, target))
-		return (store_curr(x, y, q));
-	if (track_tree(mazecpy, q, rows, cols, y - 1, x, target))
-		return (store_curr(x, y, q));
+        /*recur func checks in order of: check exit, go right, down, left, up*/
+	if ((x == target->x && y == target->y) ||
+		track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
+		track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
+		track_tree(mazecpy, q, rows, cols, y, x - 1, target) ||
+		track_tree(mazecpy, q, rows, cols, y - 1, x, target))
+	{
+                return (store_curr(x, y, q));
+	}
 	return (NULL);
 }
 
