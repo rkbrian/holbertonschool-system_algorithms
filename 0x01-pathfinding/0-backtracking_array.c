@@ -19,7 +19,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t const *start, point_t const *target)
 {
 	int map_row;
-	queue_t *q;
+	queue_t *q, *ret_ptr = NULL;
 	char **mazecpy;
 
 	if (!map || !rows || !cols || !start || !target)
@@ -44,10 +44,11 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 			return (NULL);
 		}
 	}
-	if (track_tree(mazecpy, q, rows, cols, start->y, start->x, target) == NULL)
+	ret_ptr = track_tree(mazecpy, q, rows, cols, start->y, start->x, target);
+	if (!ret_ptr) /*recursive function that return visited queue*/
 		queue_delete(q), q = NULL;
-	for (map_row = 0; map_row < rows; map_row++)
-		free(mazecpy[map_row]);
+	while (map_row >= 0)
+		free(mazecpy[map_row]), map_row--;
 	free(mazecpy);
 	return (q);
 }
@@ -66,28 +67,42 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		int y, int x, point_t const *target)
 {
-	point_t *p;
-
 	if (y < 0 || x < 0 || y >= rows || x >= cols || mazecpy[y][x] == '1')
-		return (NULL);
+		return (NULL); /*boarder line or wall*/
 	printf("Checking coordinates [%d, %d]\n", x, y);
 	mazecpy[y][x] = '1';
-	if ((x == target->x && y == target->y) ||
-		track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
-		track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
-		track_tree(mazecpy, q, rows, cols, y, x - 1, target) ||
-		track_tree(mazecpy, q, rows, cols, y - 1, x, target))
-	{
-		p = malloc(sizeof(point_t));
-		if (!p)
-		{
-			queue_delete(q);
-			return (NULL);
-		}
-		p->x = x, p->y = y;
-		queue_push_front(q, (void *)p);
-		return (q);
-	}
-	/*queue_delete(q);*/
+	/*recur func checks in order of: check exit, go right, down, left, up*/
+	if (x == target->x && y == target->y)
+		return (store_curr(x, y, q));
+	else if (track_tree(mazecpy, q, rows, cols, y, x + 1, target))
+		return (store_curr(x, y, q));
+	else if (track_tree(mazecpy, q, rows, cols, y + 1, x, target))
+		return (store_curr(x, y, q));
+	else if (track_tree(mazecpy, q, rows, cols, y, x - 1, target))
+		return (store_curr(x, y, q));
+	else if (track_tree(mazecpy, q, rows, cols, y - 1, x, target))
+		return (store_curr(x, y, q));
 	return (NULL);
+}
+
+/**
+ * store_curr - function to store current walkable path
+ * @x: current coordinate x
+ * @y: current coordinate y
+ * @q: current queue
+ * Return: queue with added path, or NULL if allocation failed
+ */
+queue_t *store_curr(int x, int y, queue_node_t *q)
+{
+	point_t *p;
+
+	p = malloc(sizeof(point_t));
+	if (!p)
+	{
+		queue_delete(q);
+		return (NULL);
+	}
+	p->x = x, p->y = y;
+	queue_push_front(q, (void *)p); /*store current walkable path*/
+	return (q);
 }
