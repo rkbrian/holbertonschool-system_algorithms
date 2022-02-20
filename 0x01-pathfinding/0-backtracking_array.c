@@ -68,7 +68,7 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 {
 	point_t *p;
 
-	if (y < 0 || x < 0 || y >= rows || x >= cols || mazecpy[x][y] == '1')
+	if (y < 0 || x < 0 || y >= rows || x >= cols || mazecpy[y][x] == '1')
 		return (NULL);
 	printf("Checking coordinates [%d, %d]\n", x, y);
 	mazecpy[y][x] = '1';
@@ -88,6 +88,6 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		queue_push_front(q, (void *)p);
 		return (q);
 	}
-        queue_delete(q);
+	queue_delete(q);
 	return (NULL);
 }
