@@ -48,8 +48,6 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	while (map_row > 0)
 		free(mazecpy[map_row]), map_row--;
 	free(mazecpy);
-	if (q)
-		free(q);
 	return (q);
 }
 /**
