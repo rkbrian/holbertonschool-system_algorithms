@@ -88,6 +88,6 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 		queue_push_front(q, (void *)p);
 		return (q);
 	}
-	queue_delete(q);
+	/*queue_delete(q);*/
 	return (NULL);
 }
