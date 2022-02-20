@@ -44,12 +44,12 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		}
 	}
 	if (track_tree(mazecpy, q, rows, cols, start->y, start->x, target) == NULL)
-                queue_delete(q), q = NULL;
-        while (map_row > 0)
-                free(mazecpy[map_row]), map_row--;
-        free(mazecpy);
-        if (q)
-                free(q);
+		queue_delete(q), q = NULL;
+	while (map_row > 0)
+		free(mazecpy[map_row]), map_row--;
+	free(mazecpy);
+	if (q)
+		free(q);
 	return (q);
 }
 
@@ -58,12 +58,12 @@ queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
 {
 	point_t *p;
 
-	if (y >= 0 && x >= 0 && y < rows && x < cols && mazecpy[x][y] == 0)
+	if (y >= 0 && x >= 0 && y < rows && x < cols && mazecpy[x][y] == '0')
 	{
 		mazecpy[y][x] = '1';
 		printf("Checking coordinates [%d, %d]\n", x, y);
 		if ((x == target->x && y == target->y) ||
-                        track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
+			track_tree(mazecpy, q, rows, cols, y, x + 1, target) ||
 			track_tree(mazecpy, q, rows, cols, y + 1, x, target) ||
 			track_tree(mazecpy, q, rows, cols, y, x - 1, target) ||
 			track_tree(mazecpy, q, rows, cols, y - 1, x, target))
