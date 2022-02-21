@@ -53,7 +53,7 @@ queue_t *track_node(vertex_t const *v, vertex_t const *target,
 	queue_t *q = NULL;
 	edge_t *edgie = NULL;
 
-	if (!target || !v || !visited)
+	if (!target || !v || !visited || visited[v->index])
 		return (NULL);
 	printf("Checking %s\n", v->content);
 	visited[v->index] = 1;
