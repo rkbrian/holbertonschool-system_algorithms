@@ -80,7 +80,6 @@ queue_t *track_node(vertex_t const *v, vertex_t const *target,
 queue_t *store_str(queue_t *q, char *str)
 {
 	char *new_str;
-	queue_node_t *ins = NULL;
 
 	new_str = strdup(str);
 	if (!new_str)
