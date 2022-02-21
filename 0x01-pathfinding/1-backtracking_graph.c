@@ -27,7 +27,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		free(q);
 		return (NULL);
 	}
-	memset(visited, 0, sizeof(visited));
+	memset(visited, 0, sizeof(size_t) * graph->nb_vertices);
 	ret_ptr = track_node(q, start, target, visited);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
 		queue_delete(q), q = NULL;
