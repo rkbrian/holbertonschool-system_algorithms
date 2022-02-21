@@ -25,7 +25,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	ret_ptr = track_node(start, target, visited), free(visited);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
 		return (NULL);
-        ret_ptr = store_str(ret_ptr, start->content);
+	ret_ptr = store_str(ret_ptr, start->content);
 	return (ret_ptr);
 }
 
