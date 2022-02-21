@@ -34,7 +34,8 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		return (NULL);
 	if (queue_push_front(ret_ptr, (void *)startcheck) == NULL)
 	{
-		queue_delete(ret_ptr);
+		queue_delete(ret_ptr), ret_ptr = queue_create();
+		queue_push_front(ret_ptr, (void *)startcheck), queue_delete(ret_ptr);
 		return (NULL); /*if target destination can't be reached*/
 	}
 	return (ret_ptr);
