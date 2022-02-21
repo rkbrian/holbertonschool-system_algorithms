@@ -23,7 +23,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	if (!visited)
 		return (NULL);
 	memset(visited, 0, sizeof(size_t) * graph->nb_vertices);
-	startcheck = start->content;
+	startcheck = strdup(start->content);
 	if (!startcheck)
 	{
 		free(visited);
@@ -34,6 +34,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		return (NULL);
 	if (queue_push_front(ret_ptr, (void *)startcheck) == NULL)
 	{
+		queue_push_front(ret_ptr, (void *)(start->content));
 		queue_delete(ret_ptr);
 		return (NULL); /*if target destination can't be reached*/
 	}
