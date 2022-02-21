@@ -38,6 +38,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t const *start, point_t const *target);
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target);
+queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
+	vertex_t const *target);
 /*helper functions*/
 /*0*/
 queue_t *track_tree(char **mazecpy, queue_t *q, int rows, int cols,
