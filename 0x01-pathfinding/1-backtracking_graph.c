@@ -15,6 +15,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 {
 	queue_t *q, *ret_ptr = NULL;
 	size_t *visited;
+	char *startcheck;
 
 	if (!graph || !start || !target)
 		return (NULL);
@@ -28,10 +29,20 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		return (NULL);
 	}
 	memset(visited, 0, sizeof(size_t) * graph->nb_vertices);
-	ret_ptr = track_node(q, start, target, visited);
+	startcheck = strdup(start->content);
+	if (!startcheck)
+	{
+		free(q), free(visited);
+		return (NULL);
+	}
+	ret_ptr = track_node(q, start, target, visited), free(visited);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
 		queue_delete(q), q = NULL;
-	free(visited);
+	if (queue_push_front(ret_ptr, (void *)startcheck) == NULL)
+	{
+		queue_delete(q), q = NULL;
+		return (NULL);
+	}
 	return (q);
 }
 
@@ -40,7 +51,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  * @q: a queue
  * @v: pointer to the current vertex
  * @target: pointer to the target vertex
- * @visit: array of integers to address visited nodes
+ * @visited: array of integers to address visited nodes
  * Return: queue
  */
 queue_t *track_node(queue_t *q, vertex_t const *v, vertex_t const *target,
