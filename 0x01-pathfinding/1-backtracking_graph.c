@@ -13,37 +13,31 @@
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target)
 {
-	queue_t *q, *ret_ptr = NULL;
+	queue_t *ret_ptr = NULL;
 	size_t *visited;
 	char *startcheck;
 
 	if (!graph || !start || !target)
 		return (NULL);
-	q = queue_create();
-	if (!q)
-		return (NULL);
 	visited = malloc(sizeof(size_t) * graph->nb_vertices);
 	if (!visited)
-	{
-		free(q);
 		return (NULL);
-	}
 	memset(visited, 0, sizeof(size_t) * graph->nb_vertices);
 	startcheck = strdup(start->content);
 	if (!startcheck)
 	{
-		free(q), free(visited);
+		free(visited);
 		return (NULL);
 	}
-	ret_ptr = track_node(q, start, target, visited), free(visited);
+	ret_ptr = track_node(start, target, visited), free(visited);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
-		queue_delete(q), q = NULL;
+		return (NULL);
 	if (queue_push_front(ret_ptr, (void *)startcheck) == NULL)
 	{
-		queue_delete(q), q = NULL;
+		queue_delete(ret_ptr); /*if target destination can't be reached*/
 		return (NULL);
 	}
-	return (q);
+	return (ret_ptr);
 }
 
 /**
@@ -54,22 +48,26 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  * @visited: array of integers to address visited nodes
  * Return: queue
  */
-queue_t *track_node(queue_t *q, vertex_t const *v, vertex_t const *target,
+queue_t *track_node(vertex_t const *v, vertex_t const *target,
 		size_t *visited)
 {
-	vertex_t *next_node = NULL;
+	queue_t *q = NULL;
+	edge_t *edgie = NULL;
 
-	if (!q || !v)
+	if (!target || !v || !visited)
 		return (NULL);
 	printf("Checking %s\n", v->content);
 	visited[v->index] = 1;
 	if (v == target)
-		return (store_str(q, v->content));
-	next_node = v->edges->dest;
-	while (next_node && visited[next_node->index] == 1)
-		next_node = next_node->next;
-	if (next_node && track_node(q, next_node, target, visited))
-		return (store_str(q, v->content));
+		return (queue_create());
+	edgie = v->edges;
+	while (edgie)
+	{
+		q = track_node(edgie->dest, target, visited);
+		if (q)
+			return (store_str(q, v->content));
+		edgie = edgie->next;
+	}
 	return (NULL);
 }
 
