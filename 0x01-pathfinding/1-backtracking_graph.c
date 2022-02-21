@@ -14,13 +14,21 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target)
 {
 	queue_t *q, *ret_ptr = NULL;
+	size_t *visited;
 
 	if (!graph || !start || !target)
 		return (NULL);
 	q = queue_create();
 	if (!q)
 		return (NULL);
-	ret_ptr = track_node(q, (vertex_t *)start, (vertex_t *)target);
+	visited = malloc(sizeof(size_t) * graph->nb_vertices);
+	if (!visited)
+	{
+		free(q);
+		return (NULL);
+	}
+	memset(visited, 0, sizeof(visited));
+	ret_ptr = track_node(q, start, target, visited);
 	if (!ret_ptr) /*track_nodesive function that return visited queue*/
 		queue_delete(q), q = NULL;
 	return (q);
@@ -33,20 +41,21 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  * @target: pointer to the target vertex
  * Return: queue
  */
-queue_t *track_node(queue_t *q, vertex_t *v, vertex_t *target)
+queue_t *track_node(queue_t *q, vertex_t const *v, vertex_t const *target,
+		size_t *visited)
 {
 	vertex_t *next_node = NULL;
 
 	if (!q || !v)
 		return (NULL);
 	printf("Checking %s\n", v->content);
-	v->x = 1;
+	visited[v->index] = 1;
 	if (v == target)
 		return (store_str(q, v->content));
 	next_node = v->edges->dest;
-	while (next_node && next_node->x == 1)
+	while (next_node && visited[next_node->index] == 1)
 		next_node = next_node->next;
-	if (next_node && track_node(q, next_node, target))
+	if (next_node && track_node(q, next_node, target, visited))
 		return (store_str(q, v->content));
 	return (NULL);
 }
