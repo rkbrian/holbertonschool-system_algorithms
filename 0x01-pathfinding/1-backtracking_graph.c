@@ -64,7 +64,7 @@ queue_t *track_node(vertex_t const *v, vertex_t const *target,
 	{
 		q = track_node(edgie->dest, target, visited);
 		if (q)
-			return (store_str(q, v->content));
+			return (store_str(q, edgie->dest->content));
 		edgie = edgie->next;
 	}
 	return (NULL);
