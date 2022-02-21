@@ -34,9 +34,10 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		return (NULL);
 	if (queue_push_front(ret_ptr, (void *)startcheck) == NULL)
 	{
-		queue_delete(ret_ptr); /*if target destination can't be reached*/
+		queue_delete(ret_ptr), free(startcheck); /*if target destination can't be reached*/
 		return (NULL);
 	}
+	free(startcheck);
 	return (ret_ptr);
 }
 
@@ -87,11 +88,6 @@ queue_t *store_str(queue_t *q, char *str)
 		queue_delete(q);
 		return (NULL);
 	}
-	ins = queue_push_front(q, (void *)new_str); /*store current walkable path*/
-	if (!ins)
-	{
-		queue_delete(q);
-		return (NULL);
-	}
+	queue_push_front(q, (void *)new_str); /*store current walkable path*/
 	return (q);
 }
