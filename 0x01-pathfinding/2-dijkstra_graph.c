@@ -28,7 +28,6 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(arr);
 		return (NULL);
 	}
-	printf("debugger\n");
 	for (i = 0, curr_v = graph->vertices; i < sizy; i++, curr_v = curr_v->next)
 	{
 		arr[i]->dis_to_start = INT_MAX, arr[i]->visit_flag = 0;
@@ -109,7 +108,7 @@ queue_t *dijkstra_queue_store(vertex_t **route, size_t sizy,
 		return (NULL);
 	}
 	queue_push_front(q, new_str);
-	while (route[i] && i < sizy)
+	/*while (route[i] && i < sizy)
 	{
 		new_str = strdup(route[i]->content);
 		if (!new_str)
@@ -117,11 +116,11 @@ queue_t *dijkstra_queue_store(vertex_t **route, size_t sizy,
 			queue_delete(q);
 			return (NULL);
 		}
-		queue_push_front(q, (void *)new_str); /*store current walkable path*/
+		queue_push_front(q, (void *)new_str); store current walkable path
 		i = route[i]->index;
 		if (i == start->index)
 			return (q);
-	}
+	}*/
 	return (q);
 }
 
