@@ -28,12 +28,12 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(arr);
 		return (NULL);
 	}
+	printf("debugger\n");
 	for (i = 0, curr_v = graph->vertices; i < sizy; i++, curr_v = curr_v->next)
 	{
 		arr[i]->dis_to_start = INT_MAX, arr[i]->visit_flag = 0;
 		arr[i]->node = curr_v; /*init array of node stats*/
 	}
-	printf("debugger\n");
 	arr[0]->dis_to_start = 0, arr[0]->visit_flag = 0;
 	short_paths(arr, route, sizy, start, target), free(arr);
 	q = dijkstra_queue_store(route, sizy, start, target), free(route);
