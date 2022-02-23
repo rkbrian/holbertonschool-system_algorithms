@@ -21,5 +21,4 @@ void nary_tree_delete(nary_tree_t *tree)
 		if (curr_child)
 			nary_tree_delete(curr_child);
 	}
-	
 }
