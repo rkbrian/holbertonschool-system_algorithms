@@ -35,6 +35,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	}
 	arr[0]->dis_to_start = 0, arr[0]->visit_flag = 1;
 	short_paths(arr, route, sizy, start, target), free(arr);
+	printf("debugger\n");
 	q = dijkstra_queue_store(route, sizy, start, target), free(route);
 	if (!q || q->front == NULL)
 	{
