@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 #include "queues.h"
 #include "graphs.h"
 
@@ -33,6 +34,31 @@ enum directing
 	TOP
 };
 
+/**
+ * struct dijkstra_node - saves the distance from start to the included node
+ * @dis_to_start: distances
+ * @visit_flag: flag indicates whether the node was visited or not
+ * @node: current node
+ */
+typedef struct dijkstra_node
+{
+	int dis_to_start;
+	int visit_flag;
+	vertex_t *node;
+} dij_t;
+
+/**
+ * struct dijkstra_edge - saves the visited edges from
+ *  being counted indefinitely
+ * @flag: flag of visited edge
+ * @ed: edge node
+ */
+typedef struct dijkstra_edge
+{
+	int flag;
+	edge_t *ed;
+} dij_edge_t;
+
 /*major functions*/
 queue_t *backtracking_array(char **map, int rows, int cols,
 	point_t const *start, point_t const *target);
@@ -49,5 +75,11 @@ queue_t *store_curr(int x, int y, queue_t *q);
 queue_t *track_node(vertex_t const *v, vertex_t const *target,
 		size_t *visited);
 queue_t *store_str(queue_t *q, char *str);
+/*2*/
+void short_paths(dij_t **arr, vertex_t **route, size_t sizy,
+		vertex_t const *start, vertex_t const *target);
+queue_t *dijkstra_queue_store(vertex_t **route, size_t sizy,
+				vertex_t const *start, vertex_t const *target);
+dij_t *min_dis(dij_t **arr, size_t sizy);
 
 #endif /*PATHFINDING_H*/
