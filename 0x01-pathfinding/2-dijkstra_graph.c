@@ -107,7 +107,7 @@ queue_t *dijkstra_queue_store(vertex_t **route, size_t sizy,
 		queue_delete(q);
 		return (NULL);
 	}
-	queue_push_front(q, new_str);
+	queue_push_front(q, new_str), printf("%lu%lu\n", sizy, start->index);
 	/*while (route[i] && i < sizy)
 	{
 		new_str = strdup(route[i]->content);
