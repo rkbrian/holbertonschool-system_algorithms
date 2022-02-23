@@ -56,7 +56,7 @@ void short_paths(dij_t **arr, vertex_t **route, size_t sizy,
 		vertex_t const *start, vertex_t const *target)
 {
 	edge_t *edgey = NULL;
-	size_t i, next_d;
+	int next_d;
 	dij_t *curr = NULL;
 
 	if (!target || !start || !arr || !sizy || !route)
