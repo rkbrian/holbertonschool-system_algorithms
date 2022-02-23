@@ -28,10 +28,12 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(arr);
 		return (NULL);
 	}
-	for (i = 0, curr_v = graph->vertices; i < sizy; i++, curr_v = curr_v->next)
+	i = 0, curr_v = graph->vertices;
+	while (i < sizy)
 	{
 		arr[i]->dis_to_start = INT_MAX, arr[i]->visit_flag = 0;
 		arr[i]->node = NULL, arr[i]->node = curr_v; /*init array of node stats*/
+		i++, curr_v = curr_v->next;
 	}
 	arr[0]->dis_to_start = 0, arr[0]->visit_flag = 0;
 	short_paths(arr, route, sizy, start, target), free(arr);
