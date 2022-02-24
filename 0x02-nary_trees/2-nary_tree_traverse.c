@@ -8,8 +8,8 @@
  * @depth: the depth of the node being traversed
  * Return: the biggest depth of the tree pointed to by root
  */
-size_t nary_tree_traverse(nary_tree_t const *root, void (*action)
-	(nary_tree_t const *node, size_t depth))
+size_t nary_tree_traverse(nary_tree_t const *root,
+	void (*action)(nary_tree_t const *node, size_t depth))
 {
 	static size_t tree_d;
 	size_t memo;
