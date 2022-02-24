@@ -27,5 +27,12 @@ nary_tree_t *nary_tree_insert(nary_tree_t *parent, char const *str);
 void nary_tree_delete(nary_tree_t *tree);
 size_t nary_tree_traverse(nary_tree_t const *root, void (*action)
 	(nary_tree_t const *node, size_t depth));
+/*3*/
+size_t nary_tree_diameter(nary_tree_t const *root);
+
+/*helper functions*/
+/*3*/
+size_t nary_tree_height(nary_tree_t const *tree);
+size_t max_dia_store(size_t new_val, int clear_memo);
 
 #endif /*NARY_TREES_H*/
