@@ -13,7 +13,7 @@ int path_exists(nary_tree_t const *root, char const * const *path)
 {
 	size_t path_size = 0, tree_d = 0;
 
-	if (!root || !path) /*tree or path is empty*/
+	if (!root || !path || path[0] == NULL) /*tree or path is empty*/
 		return (0);
 	while (path[path_size] != NULL)
 		path_size++;
