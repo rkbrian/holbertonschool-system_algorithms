@@ -9,7 +9,7 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 {
 	size_t max_diameter;
 
-	if (!root || root->children == NULL)
+	if (!root)
 		return (0);
 	nary_tree_height(root);
 	max_diameter = max_dia_store(0, 1);
